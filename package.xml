@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>robot_properties_manipulator</name>
+  <version>1.0.0</version>
+  <description>robot_properties_manipulator</description>
+  <author email="ilija.stanojkovic@tuebingen.mpg.de">Ilija Stanojkovic</author>
+  <maintainer email="ilija.stanojkovic@tuebingen.mpg.de">Ilija Stanojkovic</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- We need the xacro package to build the urdf model -->
+  <build_depend> xacro </build_depend>
+  <run_depend>   xacro </run_depend>
+
+  <export>
+  </export>
+</package>
