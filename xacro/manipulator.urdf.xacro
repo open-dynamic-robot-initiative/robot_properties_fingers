@@ -24,19 +24,19 @@
     <xacro:property name="proximal_x" value="0.0399"/>
     <xacro:property name="proximal_y" value="0.2115"/>
     <xacro:property name="proximal_z" value="0.047138" />
-    <xacro:property name="proximal_m" value="1.0" />
+    <xacro:property name="proximal_m" value="0.180" />
     
     <!-- Intermediate link Inertia -->
     <xacro:property name="intermediate_x" value="0.0419"/>
     <xacro:property name="intermediate_y" value="0.206"/>
     <xacro:property name="intermediate_z" value="0.044276" />
-    <xacro:property name="intermediate_m" value="0.95" />
+    <xacro:property name="intermediate_m" value="0.180" />
     
     <!-- Tip link Inertia -->
     <xacro:property name="tip_x" value="0.027317"/>
     <xacro:property name="tip_y" value="0.183"/>
     <xacro:property name="tip_z" value="0.024" />
-    <xacro:property name="tip_m" value="0.2" />
+    <xacro:property name="tip_m" value="0.02" />
     
     <mujoco>
         <compiler meshdir="../meshes/${mesh_ext}/" balanceinertia="true" discardvisual="false" />
@@ -129,9 +129,9 @@
     <joint name="holder_to_proximal" type="revolute">
         <parent link="holder_link"/>
         <child link="proximal_link"/>
-        <limit effort="1000" lower="-1.5708" upper="1.5708" velocity="1000"/>
+        <limit effort="1000" lower="0" upper="3.14159265359" velocity="1000"/>
         <axis rpy="0 0 0" xyz="0 1 0"/>
-        <origin xyz="0 0 0"/>
+        <origin rpy="0 -1.5708 0" xyz="0 0 0"/>
     </joint>
 
     <xacro:my_link
@@ -169,9 +169,9 @@
     <joint name="proximal_to_intermediate" type="revolute">
         <parent link="proximal_link"/>
         <child link="intermediate_link"/>
-        <limit effort="1000" lower="-2.9234265" upper="2.9234265" velocity="1000"/>
+        <limit effort="1000" lower="-5.846853" upper="0" velocity="1000"/>
         <axis rpy="0 0 0" xyz="1 0 0"/>
-        <origin xyz="0.014 0.02695 0"/>
+        <origin rpy="2.9234265 0 0" xyz="0.014 0.02695 0"/>
     </joint>
 
     <xacro:my_link
@@ -190,9 +190,9 @@
     <joint name="intermediate_to_tip" type="revolute">
         <parent link="intermediate_link"/>
         <child link="tip_link"/>
-        <limit effort="1000" lower="-3.00197" upper="3.00197" velocity="1000"/>
+        <limit effort="1000" lower="0" upper="6.00394" velocity="1000"/>
         <axis rpy="0 0 0" xyz="1 0 0"/>
-        <origin xyz="0 -0.16 0"/>
+        <origin rpy="-3.00197 0 0" xyz="0 -0.16 0"/>
     </joint>
 
     <xacro:my_link
@@ -225,7 +225,7 @@
             x="0.01"
             y="0.01"
             z="0.01"
-            m="0.01"/>
+            m="0.005"/>
     
 <!--    <actuator>
         <motor name="holder_to_proximal"        gear="100" joint="holder_to_proximal" />
