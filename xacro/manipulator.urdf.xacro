@@ -233,11 +233,11 @@
         <motor name="intermediate_to_tip"       gear="100" joint="intermediate_to_tip" />
     </actuator>-->
     
-    <transmission name="holder_to_proximal">
+<!--    <transmission name="holder_to_proximal">
         <joint name="holder_to_proximal" />
         <actuator name="holder_to_proximal">
             <mechanicalReduction>50</mechanicalReduction>
         </actuator>
-    </transmission>
+    </transmission> -->
 
 </robot>
