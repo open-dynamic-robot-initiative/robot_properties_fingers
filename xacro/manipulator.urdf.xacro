@@ -78,22 +78,6 @@
 
     <!-- World Link -->
     <link name="world"/>
-
-    <!-- Dummy Link -->
-    <link name="link0"/>
-    <joint name="world_joint" type="fixed">
-        <parent link="world"/>
-        <child link="link0"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="0 0 1"/>
-    </joint>
-
-    <joint name="holder_joint" type="fixed">
-        <parent link="link0"/>
-        <child link="holder_link"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-    </joint>
-
     <xacro:my_link
             name="holder_link"
             origin_rpy="0 0 0"
@@ -106,13 +90,6 @@
             y="0.1"
             z="0.1"
             m="0.1"/>
-
-    <joint name="holder_to_stage" type="fixed">
-        <parent link="holder_link"/>
-        <child link="stage_link"/>
-        <origin xyz="0 0 -0.2665"/>
-    </joint>
-
     <xacro:my_link
             name="stage_link"
             origin_rpy="0 0 0"
@@ -125,15 +102,6 @@
             y="0.5"
             z="0.1"
             m="5"/>
-
-    <joint name="holder_to_proximal" type="revolute">
-        <parent link="holder_link"/>
-        <child link="proximal_link"/>
-        <limit effort="1000" lower="0" upper="3.14159265359" velocity="1000"/>
-        <axis rpy="0 0 0" xyz="0 1 0"/>
-        <origin rpy="0 -1.5708 0" xyz="0 0 0"/>
-    </joint>
-
     <xacro:my_link
             name="proximal_link"
             origin_rpy="0 0 0"
@@ -146,34 +114,6 @@
             y="${proximal_y}"
             z="${proximal_z}"
             m="${proximal_m}"/>
-
-    <joint name="holder_to_base" type="fixed">
-        <parent link="holder_link"/>
-        <child link="base_link"/>
-        <origin xyz="0 0.20595 0"/>
-    </joint>
-
-    <xacro:my_link
-            name="base_link"
-            origin_rpy="0 0 0"
-            origin_xyz="0 0 0"
-            mesh_file="${base_link_mesh}"
-            color_name="${color_name}"
-            color="${color}"
-            opacity="${opacity}"
-            x="0.1"
-            y="0.1"
-            z="0.1"
-            m="0.1"/>
-
-    <joint name="proximal_to_intermediate" type="revolute">
-        <parent link="proximal_link"/>
-        <child link="intermediate_link"/>
-        <limit effort="1000" lower="-5.846853" upper="0" velocity="1000"/>
-        <axis rpy="0 0 0" xyz="-1 0 0"/>
-        <origin rpy="2.9234265 0 0" xyz="0.014 0.02695 0"/>
-    </joint>
-
     <xacro:my_link
             name="intermediate_link"
             origin_rpy="0 0 0"
@@ -186,15 +126,18 @@
             y="${intermediate_y}"
             z="${intermediate_z}"
             m="${intermediate_m}"/>
-
-    <joint name="intermediate_to_tip" type="revolute">
-        <parent link="intermediate_link"/>
-        <child link="tip_link"/>
-        <limit effort="1000" lower="0" upper="6.00394" velocity="1000"/>
-        <axis rpy="0 0 0" xyz="1 0 0"/>
-        <origin rpy="-2.9 0 0" xyz="0 -0.16 0"/>
-    </joint>
-
+    <xacro:my_link
+            name="base_link"
+            origin_rpy="0 0 0"
+            origin_xyz="0 0 0"
+            mesh_file="${base_link_mesh}"
+            color_name="${color_name}"
+            color="${color}"
+            opacity="${opacity}"
+            x="0.1"
+            y="0.1"
+            z="0.1"
+            m="0.1"/>
     <xacro:my_link
             name="tip_link"
             origin_rpy="0 0 0"
@@ -207,13 +150,6 @@
             y="${tip_y}"
             z="${tip_z}"
             m="${tip_m}"/>
-
-    <joint name="tip_to_padding" type="fixed">
-        <parent link="tip_link"/>
-        <child link="padding_link"/>
-        <origin xyz="-0.0125 -0.16 0"/>
-    </joint>
-
     <xacro:my_link
             name="padding_link"
             origin_rpy="0 0 0"
@@ -226,18 +162,51 @@
             y="0.01"
             z="0.01"
             m="0.005"/>
-    
-<!--    <actuator>
-        <motor name="holder_to_proximal"        gear="100" joint="holder_to_proximal" />
-        <motor name="proximal_to_intermediate"  gear="100" joint="proximal_to_intermediate" />
-        <motor name="intermediate_to_tip"       gear="100" joint="intermediate_to_tip" />
-    </actuator>-->
-    
-<!--    <transmission name="holder_to_proximal">
-        <joint name="holder_to_proximal" />
-        <actuator name="holder_to_proximal">
-            <mechanicalReduction>50</mechanicalReduction>
-        </actuator>
-    </transmission> -->
+
+
+
+    <joint name="holder_joint" type="fixed">
+        <parent link="world"/>
+        <child link="holder_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    <joint name="holder_to_stage" type="fixed">
+        <parent link="holder_link"/>
+        <child link="stage_link"/>
+        <origin xyz="0 0 -0.2665"/>
+    </joint>
+    <joint name="holder_to_proximal" type="revolute">
+        <parent link="holder_link"/>
+        <child link="proximal_link"/>
+        <limit effort="1000" lower="0" upper="3.14159265359" velocity="1000"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <origin rpy="0 -1.5708 0" xyz="0 0 0"/>
+    </joint>
+    <joint name="holder_to_base" type="fixed">
+        <parent link="holder_link"/>
+        <child link="base_link"/>
+        <origin xyz="0 0.20595 0"/>
+    </joint>
+    <joint name="proximal_to_intermediate" type="revolute">
+        <parent link="proximal_link"/>
+        <child link="intermediate_link"/>
+        <limit effort="1000" lower="-5.846853" upper="0" velocity="1000"/>
+        <axis rpy="0 0 0" xyz="-1 0 0"/>
+        <origin rpy="2.9234265 0 0" xyz="0.014 0.02695 0"/>
+    </joint>
+    <joint name="intermediate_to_tip" type="revolute">
+        <parent link="intermediate_link"/>
+        <child link="tip_link"/>
+        <limit effort="1000" lower="0" upper="6.00394" velocity="1000"/>
+        <axis rpy="0 0 0" xyz="1 0 0"/>
+        <origin rpy="-2.9 0 0" xyz="0 -0.16 0"/>
+    </joint>
+    <joint name="tip_to_padding" type="fixed">
+        <parent link="tip_link"/>
+        <child link="padding_link"/>
+        <origin xyz="-0.0125 -0.16 0"/>
+    </joint>
+
+
 
 </robot>
