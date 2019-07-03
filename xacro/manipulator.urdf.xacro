@@ -20,23 +20,7 @@
     <xacro:property name="distal_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_file_extension}"/>
     <xacro:property name="distal_padding_mesh" value="${mesh_dir}/finger_padding.${mesh_file_extension}"/>
     
-    <!-- Proximal link Inertia -->
-    <xacro:property name="proximal_x" value="0.0399"/>
-    <xacro:property name="proximal_y" value="0.2115"/>
-    <xacro:property name="proximal_z" value="0.047138" />
-    <xacro:property name="proximal_m" value="0.180" />
-    
-    <!-- Intermediate link Inertia -->
-    <xacro:property name="intermediate_x" value="0.0419"/>
-    <xacro:property name="intermediate_y" value="0.206"/>
-    <xacro:property name="intermediate_z" value="0.044276" />
-    <xacro:property name="intermediate_m" value="0.180" />
-    
-    <!-- Tip link Inertia -->
-    <xacro:property name="tip_x" value="0.027317"/>
-    <xacro:property name="tip_y" value="0.183"/>
-    <xacro:property name="tip_z" value="0.024" />
-    <xacro:property name="tip_m" value="0.02" />
+
 
     <!-- Some macros for convenience -->
     <xacro:macro name="static_link" params="name origin_rpy origin_xyz mesh_file">
@@ -121,16 +105,17 @@
         <origin xyz="0 0.20595 0"/>
     </joint>
 
+
     <!-- proximal link -->
     <xacro:dynamic_link
             name="proximal_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${proximal_mesh}"
-            x="${proximal_x}"
-            y="${proximal_y}"
-            z="${proximal_z}"
-            m="${proximal_m}"/>
+            x="0.0399"
+            y="0.2115"
+            z="0.047138"
+            m="0.180"/>
 
     <!-- central link -->
     <xacro:dynamic_link
@@ -138,10 +123,10 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${central_mesh}"
-            x="${intermediate_x}"
-            y="${intermediate_y}"
-            z="${intermediate_z}"
-            m="${intermediate_m}"/>
+            x="0.0419"
+            y="0.206"
+            z="0.044276"
+            m="0.180"/>
 
     <!-- distal link -->
     <xacro:dynamic_link
@@ -149,19 +134,15 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${distal_mesh}"
-            x="${tip_x}"
-            y="${tip_y}"
-            z="${tip_z}"
-            m="${tip_m}"/>
-    <xacro:dynamic_link
+            x="0.027317"
+            y="0.183"
+            z="0.024"
+            m="0.02"/>
+    <xacro:static_link
             name="padding_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${distal_padding_mesh}"
-            x="0.01"
-            y="0.01"
-            z="0.01"
-            m="0.005"/>
+            mesh_file="${distal_padding_mesh}"/>
     <joint name="tip_to_padding" type="fixed">
         <parent link="tip_link"/>
         <child link="padding_link"/>
