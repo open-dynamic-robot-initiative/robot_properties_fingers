@@ -170,7 +170,7 @@
         <parent link="proximal_link"/>
         <child link="intermediate_link"/>
         <limit effort="1000" lower="-5.846853" upper="0" velocity="1000"/>
-        <axis rpy="0 0 0" xyz="1 0 0"/>
+        <axis rpy="0 0 0" xyz="-1 0 0"/>
         <origin rpy="2.9234265 0 0" xyz="0.014 0.02695 0"/>
     </joint>
 
@@ -192,7 +192,7 @@
         <child link="tip_link"/>
         <limit effort="1000" lower="0" upper="6.00394" velocity="1000"/>
         <axis rpy="0 0 0" xyz="1 0 0"/>
-        <origin rpy="-3.00197 0 0" xyz="0 -0.16 0"/>
+        <origin rpy="-2.9 0 0" xyz="0 -0.16 0"/>
     </joint>
 
     <xacro:my_link
