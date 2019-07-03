@@ -95,11 +95,11 @@
             origin_xyz="0 0 0"
             mesh_file="${proximal_mesh}"/>
         <xacro:add_inertia
-            length_x="0.04"
-            length_y="0.2"
-            length_z="0.04"
+            length_x="0.02"
+            length_y="0.14"
+            length_z="0.02"
             mass="0.2"
-            com="0 0.1 0"/>
+            com="0 0.05 0"/>
     </link>
 
     <!-- central link -->
@@ -109,11 +109,11 @@
             origin_xyz="0 0 0"
             mesh_file="${central_mesh}"/>
         <xacro:add_inertia
-            length_x="0.04"
-            length_y="0.2"
-            length_z="0.04"
+            length_x="0.02"
+            length_y="0.14"
+            length_z="0.02"
             mass="0.2"
-            com="0 -0.1 0"/>
+            com="0 -0.05 0"/>
     </link>
 
     <!-- distal link -->
@@ -123,11 +123,11 @@
             origin_xyz="0 0 0"
             mesh_file="${distal_mesh}"/>
         <xacro:add_inertia
-            length_x="0.02"
-            length_y="0.2"
-            length_z="0.02"
+            length_x="0.01"
+            length_y="0.14"
+            length_z="0.01"
             mass="0.05"
-            com="0 -0.1 0"/>
+            com="0 -0.05 0"/>
     </link>
     <link name="distal_padding_link">
         <xacro:add_geometry
