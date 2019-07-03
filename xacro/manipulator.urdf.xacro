@@ -37,10 +37,33 @@
     <xacro:property name="tip_y" value="0.183"/>
     <xacro:property name="tip_z" value="0.024" />
     <xacro:property name="tip_m" value="0.02" />
-    
-    <mujoco>
-        <compiler meshdir="../meshes/${mesh_file_extension}/" balanceinertia="true" discardvisual="false" />
-    </mujoco>
+
+
+    <xacro:macro name="static_link" params="name origin_rpy origin_xyz mesh_file">
+        <link name="${name}">
+            <visual>
+                <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
+                <geometry>
+                    <mesh filename="${mesh_file}"/>
+                </geometry>
+                <material name="${material_name}">
+                    <color rgba="${color} ${opacity}"/>
+                </material>
+            </visual>
+            <collision>
+                <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
+                <geometry>
+                    <mesh filename="${mesh_file}"/>
+                </geometry>
+                <material name="${material_name}">
+                    <color rgba="${color} ${opacity}"/>
+                </material>
+            </collision>
+        </link>
+    </xacro:macro>
+
+
+
 
     <xacro:macro name="my_link" params="name origin_rpy origin_xyz
                                         mesh_file x y z m">
@@ -76,25 +99,26 @@
     </xacro:macro>
 
     <!-- World Link -->
-    <link name="world"/>
-    <xacro:my_link
+
+    <xacro:static_link
+            name="base_link"
+            origin_rpy="0 0 0"
+            origin_xyz="0 0 0"
+            mesh_file="${base_mesh}"/>
+    <xacro:static_link
             name="holder_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${base_holder_mesh}"
-            x="0.1"
-            y="0.1"
-            z="0.1"
-            m="0.1"/>
-    <xacro:my_link
+            mesh_file="${base_holder_mesh}"/>
+    <xacro:static_link
             name="stage_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${base_stage_mesh}"
-            x="0.5"
-            y="0.5"
-            z="0.1"
-            m="5"/>
+            mesh_file="${base_stage_mesh}"/>
+
+
+
+
     <xacro:my_link
             name="proximal_link"
             origin_rpy="0 0 0"
@@ -113,15 +137,6 @@
             y="${intermediate_y}"
             z="${intermediate_z}"
             m="${intermediate_m}"/>
-    <xacro:my_link
-            name="base_link"
-            origin_rpy="0 0 0"
-            origin_xyz="0 0 0"
-            mesh_file="${base_mesh}"
-            x="0.1"
-            y="0.1"
-            z="0.1"
-            m="0.1"/>
     <xacro:my_link
             name="tip_link"
             origin_rpy="0 0 0"
@@ -143,11 +158,6 @@
 
 
 
-    <joint name="holder_joint" type="fixed">
-        <parent link="world"/>
-        <child link="holder_link"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-    </joint>
     <joint name="holder_to_stage" type="fixed">
         <parent link="holder_link"/>
         <child link="stage_link"/>
