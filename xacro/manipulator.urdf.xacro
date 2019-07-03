@@ -10,15 +10,15 @@
     <xacro:property name="opacity" value="1.0"/>
 
     <!-- Meshes -->
-    <xacro:property name="mesh_ext" value="stl"/>
-    <xacro:property name="mesh_dir" value="package://robot_properties_manipulator/meshes/${mesh_ext}"/>
-    <xacro:property name="stage_link_mesh" value="${mesh_dir}/Stage_simplified.${mesh_ext}"/>
-    <xacro:property name="base_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.${mesh_ext}"/>
-    <xacro:property name="holder_link_mesh" value="${mesh_dir}/BL_Finger_Holder_SIM.${mesh_ext}"/>
-    <xacro:property name="proximal_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.${mesh_ext}"/>
-    <xacro:property name="intermediate_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Intermediate.${mesh_ext}"/>
-    <xacro:property name="tip_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_ext}"/>
-    <xacro:property name="padding_link_mesh" value="${mesh_dir}/finger_padding.${mesh_ext}"/>
+    <xacro:property name="mesh_file_extension" value="stl"/>
+    <xacro:property name="mesh_dir" value="package://robot_properties_manipulator/meshes/${mesh_file_extension}"/>
+    <xacro:property name="base_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.${mesh_file_extension}"/>
+    <xacro:property name="base_holder_mesh" value="${mesh_dir}/BL_Finger_Holder_SIM.${mesh_file_extension}"/>
+    <xacro:property name="base_stage_mesh" value="${mesh_dir}/Stage_simplified.${mesh_file_extension}"/>
+    <xacro:property name="proximal_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.${mesh_file_extension}"/>
+    <xacro:property name="central_mesh" value="${mesh_dir}/SIM__BL-Finger_Intermediate.${mesh_file_extension}"/>
+    <xacro:property name="distal_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_file_extension}"/>
+    <xacro:property name="distal_padding_mesh" value="${mesh_dir}/finger_padding.${mesh_file_extension}"/>
     
     <!-- Proximal link Inertia -->
     <xacro:property name="proximal_x" value="0.0399"/>
@@ -39,7 +39,7 @@
     <xacro:property name="tip_m" value="0.02" />
     
     <mujoco>
-        <compiler meshdir="../meshes/${mesh_ext}/" balanceinertia="true" discardvisual="false" />
+        <compiler meshdir="../meshes/${mesh_file_extension}/" balanceinertia="true" discardvisual="false" />
     </mujoco>
 
     <xacro:macro name="my_link" params="name origin_rpy origin_xyz
@@ -81,7 +81,7 @@
             name="holder_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${holder_link_mesh}"
+            mesh_file="${base_holder_mesh}"
             x="0.1"
             y="0.1"
             z="0.1"
@@ -90,7 +90,7 @@
             name="stage_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${stage_link_mesh}"
+            mesh_file="${base_stage_mesh}"
             x="0.5"
             y="0.5"
             z="0.1"
@@ -99,7 +99,7 @@
             name="proximal_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${proximal_link_mesh}"
+            mesh_file="${proximal_mesh}"
             x="${proximal_x}"
             y="${proximal_y}"
             z="${proximal_z}"
@@ -108,7 +108,7 @@
             name="intermediate_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${intermediate_link_mesh}"
+            mesh_file="${central_mesh}"
             x="${intermediate_x}"
             y="${intermediate_y}"
             z="${intermediate_z}"
@@ -117,7 +117,7 @@
             name="base_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${base_link_mesh}"
+            mesh_file="${base_mesh}"
             x="0.1"
             y="0.1"
             z="0.1"
@@ -126,7 +126,7 @@
             name="tip_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${tip_link_mesh}"
+            mesh_file="${distal_mesh}"
             x="${tip_x}"
             y="${tip_y}"
             z="${tip_z}"
@@ -135,7 +135,7 @@
             name="padding_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${padding_link_mesh}"
+            mesh_file="${distal_padding_mesh}"
             x="0.01"
             y="0.01"
             z="0.01"
