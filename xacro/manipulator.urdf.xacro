@@ -44,14 +44,15 @@
         </collision>
     </xacro:macro>
 
-    <xacro:macro name="add_inertia" params="x y z m">
+    <xacro:macro name="add_inertia" params="length_x length_y length_z mass com">
         <inertial>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value="${m}"/>
-            <inertia ixx="${1./12. * m * (y*y + z*z)}"
-                        iyy="${1./12. * m * (x*x + z*z)}"
-                        izz="${1./12. * m * (x*x + y*y)}"
-                        ixy="0" ixz="0" iyz="0"/>
+            <origin rpy="0 0 0" xyz="${com}"/>
+            <mass value="${mass}"/>
+            <inertia 
+                    ixx="${1./12. * mass * (length_y*length_y + length_z*length_z)}"
+                    iyy="${1./12. * mass * (length_x*length_x + length_z*length_z)}"
+                    izz="${1./12. * mass * (length_x*length_x + length_y*length_y)}"
+                    ixy="0" ixz="0" iyz="0"/>
         </inertial>
     </xacro:macro>
 
@@ -94,10 +95,11 @@
             origin_xyz="0 0 0"
             mesh_file="${proximal_mesh}"/>
         <xacro:add_inertia
-            x="0.0399"
-            y="0.2115"
-            z="0.047138"
-            m="0.180"/>
+            length_x="0.04"
+            length_y="0.2"
+            length_z="0.04"
+            mass="0.2"
+            com="0 0.1 0"/>
     </link>
 
     <!-- central link -->
@@ -107,10 +109,11 @@
             origin_xyz="0 0 0"
             mesh_file="${central_mesh}"/>
         <xacro:add_inertia
-            x="0.0419"
-            y="0.206"
-            z="0.044276"
-            m="0.180"/>
+            length_x="0.04"
+            length_y="0.2"
+            length_z="0.04"
+            mass="0.2"
+            com="0 -0.1 0"/>
     </link>
 
     <!-- distal link -->
@@ -120,10 +123,11 @@
             origin_xyz="0 0 0"
             mesh_file="${distal_mesh}"/>
         <xacro:add_inertia
-            x="0.027317"
-            y="0.183"
-            z="0.024"
-            m="0.02"/>
+            length_x="0.02"
+            length_y="0.2"
+            length_z="0.02"
+            mass="0.05"
+            com="0 -0.1 0"/>
     </link>
     <link name="distal_padding_link">
         <xacro:add_geometry
