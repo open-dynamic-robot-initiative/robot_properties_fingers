@@ -98,7 +98,7 @@
             length_x="0.02"
             length_y="0.14"
             length_z="0.02"
-            mass="0.2"
+            mass="0.1"
             com="0 0.05 0"/>
     </link>
 
@@ -112,7 +112,7 @@
             length_x="0.02"
             length_y="0.14"
             length_z="0.02"
-            mass="0.2"
+            mass="0.1"
             com="0 -0.05 0"/>
     </link>
 
@@ -126,7 +126,7 @@
             length_x="0.01"
             length_y="0.14"
             length_z="0.01"
-            mass="0.05"
+            mass="0.03"
             com="0 -0.05 0"/>
     </link>
     <link name="distal_padding_link">
