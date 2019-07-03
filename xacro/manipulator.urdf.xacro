@@ -5,9 +5,9 @@
        xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
        xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
 
-    <xacro:property name="color_name" value="grey"/>
-    <xacro:property name="color" value="0.8 0.8 0.8"/>
-    <xacro:property name="opacity" value="0.8"/>
+    <xacro:property name="material_name" value="material"/>
+    <xacro:property name="color" value="0.6 0.6 1.0"/>
+    <xacro:property name="opacity" value="1.0"/>
 
     <!-- Meshes -->
     <xacro:property name="mesh_ext" value="stl"/>
@@ -43,8 +43,7 @@
     </mujoco>
 
     <xacro:macro name="my_link" params="name origin_rpy origin_xyz
-                                        mesh_file color_name color
-                                        opacity x y z m">
+                                        mesh_file x y z m">
         <link name="${name}">
             <inertial>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -60,7 +59,7 @@
                 <geometry>
                     <mesh filename="${mesh_file}"/>
                 </geometry>
-                <material name="${color_name}">
+                <material name="${material_name}">
                     <color rgba="${color} ${opacity}"/>
                 </material>
             </visual>
@@ -69,7 +68,7 @@
                 <geometry>
                     <mesh filename="${mesh_file}"/>
                 </geometry>
-                <material name="${color_name}">
+                <material name="${material_name}">
                     <color rgba="${color} ${opacity}"/>
                 </material>
             </collision>
@@ -83,9 +82,6 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${holder_link_mesh}"
-            color_name="${color_name}"
-            color="${color}"
-            opacity="${opacity}"
             x="0.1"
             y="0.1"
             z="0.1"
@@ -95,9 +91,6 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${stage_link_mesh}"
-            color_name="${color_name}"
-            color="${color}"
-            opacity="${opacity}"
             x="0.5"
             y="0.5"
             z="0.1"
@@ -107,9 +100,6 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${proximal_link_mesh}"
-            color_name="${color_name}"
-            color="${color}"
-            opacity="${opacity}"
             x="${proximal_x}"
             y="${proximal_y}"
             z="${proximal_z}"
@@ -119,9 +109,6 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${intermediate_link_mesh}"
-            color_name="${color_name}"
-            color="${color}"
-            opacity="${opacity}"
             x="${intermediate_x}"
             y="${intermediate_y}"
             z="${intermediate_z}"
@@ -131,9 +118,6 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${base_link_mesh}"
-            color_name="${color_name}"
-            color="${color}"
-            opacity="${opacity}"
             x="0.1"
             y="0.1"
             z="0.1"
@@ -143,9 +127,6 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${tip_link_mesh}"
-            color_name="${color_name}"
-            color="${color}"
-            opacity="${opacity}"
             x="${tip_x}"
             y="${tip_y}"
             z="${tip_z}"
@@ -155,9 +136,6 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${padding_link_mesh}"
-            color_name="${color_name}"
-            color="${color}"
-            opacity="${opacity}"
             x="0.01"
             y="0.01"
             z="0.01"
