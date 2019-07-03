@@ -12,7 +12,7 @@
     <!-- Meshes -->
     <xacro:property name="mesh_file_extension" value="stl"/>
     <xacro:property name="mesh_dir" value="package://robot_properties_manipulator/meshes/${mesh_file_extension}"/>
-    <xacro:property name="base_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.${mesh_file_extension}"/>
+    <xacro:property name="base_module_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.${mesh_file_extension}"/>
     <xacro:property name="base_holder_mesh" value="${mesh_dir}/BL_Finger_Holder_SIM.${mesh_file_extension}"/>
     <xacro:property name="base_stage_mesh" value="${mesh_dir}/Stage_simplified.${mesh_file_extension}"/>
     <xacro:property name="proximal_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.${mesh_file_extension}"/>
@@ -61,13 +61,13 @@
         <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${base_mesh}"/>
+            mesh_file="${base_holder_mesh}"/>
     </link>
-    <link name="base_holder_link">
+    <link name="base_module_link">
         <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${base_holder_mesh}"/>
+            mesh_file="${base_module_mesh}"/>
     </link>
     <link name="base_stage_link">
         <xacro:add_geometry
@@ -75,14 +75,14 @@
             origin_xyz="0 0 0"
             mesh_file="${base_stage_mesh}"/>
     </link>
-    <joint name="base_holder_to_stage" type="fixed">
-        <parent link="base_holder_link"/>
+    <joint name="base_to_stage" type="fixed">
+        <parent link="base_link"/>
         <child link="base_stage_link"/>
         <origin xyz="0 0 -0.2665"/>
     </joint>
-    <joint name="base_holder_to_base" type="fixed">
-        <parent link="base_holder_link"/>
-        <child link="base_link"/>
+    <joint name="base_to_module" type="fixed">
+        <parent link="base_link"/>
+        <child link="base_module_link"/>
         <origin xyz="0 0.20595 0"/>
     </joint>
 
@@ -139,7 +139,7 @@
 
     <!-- kinematics -->
     <joint name="base_proximal_joint" type="revolute">
-        <parent link="base_holder_link"/>
+        <parent link="base_link"/>
         <child link="proximal_link"/>
         <limit effort="1000" lower="0" upper="3.14" velocity="1000"/>
         <axis rpy="0 0 0" xyz="0 1 0"/>
