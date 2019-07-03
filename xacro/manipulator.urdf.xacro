@@ -23,28 +23,38 @@
 
 
     <!-- Some macros for convenience -->
-    <xacro:macro name="static_link" params="name origin_rpy origin_xyz mesh_file">
-        <link name="${name}">
-            <visual>
-                <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
-                <geometry>
-                    <mesh filename="${mesh_file}"/>
-                </geometry>
-                <material name="${material_name}">
-                    <color rgba="${color} ${opacity}"/>
-                </material>
-            </visual>
-            <collision>
-                <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
-                <geometry>
-                    <mesh filename="${mesh_file}"/>
-                </geometry>
-                <material name="${material_name}">
-                    <color rgba="${color} ${opacity}"/>
-                </material>
-            </collision>
-        </link>
+    <xacro:macro name="add_geometry" params="origin_rpy origin_xyz mesh_file">
+        <visual>
+            <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
+            <geometry>
+                <mesh filename="${mesh_file}"/>
+            </geometry>
+            <material name="${material_name}">
+                <color rgba="${color} ${opacity}"/>
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
+            <geometry>
+                <mesh filename="${mesh_file}"/>
+            </geometry>
+            <material name="${material_name}">
+                <color rgba="${color} ${opacity}"/>
+            </material>
+        </collision>
     </xacro:macro>
+
+    <xacro:macro name="add_inertia" params="x y z m">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="${m}"/>
+            <inertia ixx="${1./12. * m * (y*y + z*z)}"
+                        iyy="${1./12. * m * (x*x + z*z)}"
+                        izz="${1./12. * m * (x*x + y*y)}"
+                        ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </xacro:macro>
+
     <xacro:macro name="dynamic_link" params="name origin_rpy origin_xyz
                                         mesh_file x y z m">
         <link name="${name}">
@@ -54,8 +64,7 @@
                 <inertia ixx="${1./12. * m * (y*y + z*z)}"
                          iyy="${1./12. * m * (x*x + z*z)}"
                          izz="${1./12. * m * (x*x + y*y)}"
-                         ixy="0" ixz="0" iyz="0"
-                />
+                         ixy="0" ixz="0" iyz="0"/>
             </inertial>
             <visual>
                 <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
@@ -79,21 +88,24 @@
     </xacro:macro>
 
     <!-- base link -->
-    <xacro:static_link
-            name="base_link"
+    <link name="base_link">
+        <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${base_mesh}"/>
-    <xacro:static_link
-            name="base_holder_link"
+    </link>
+    <link name="base_holder_link">
+        <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${base_holder_mesh}"/>
-    <xacro:static_link
-            name="base_stage_link"
+    </link>
+    <link name="base_stage_link">
+        <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${base_stage_mesh}"/>
+    </link>
     <joint name="base_holder_to_stage" type="fixed">
         <parent link="base_holder_link"/>
         <child link="base_stage_link"/>
@@ -138,11 +150,12 @@
             y="0.183"
             z="0.024"
             m="0.02"/>
-    <xacro:static_link
-            name="padding_link"
+    <link name="padding_link">
+        <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${distal_padding_mesh}"/>
+    </link>
     <joint name="tip_to_padding" type="fixed">
         <parent link="tip_link"/>
         <child link="padding_link"/>
