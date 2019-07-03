@@ -55,37 +55,6 @@
         </inertial>
     </xacro:macro>
 
-    <xacro:macro name="dynamic_link" params="name origin_rpy origin_xyz
-                                        mesh_file x y z m">
-        <link name="${name}">
-            <inertial>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
-                <mass value="${m}"/>
-                <inertia ixx="${1./12. * m * (y*y + z*z)}"
-                         iyy="${1./12. * m * (x*x + z*z)}"
-                         izz="${1./12. * m * (x*x + y*y)}"
-                         ixy="0" ixz="0" iyz="0"/>
-            </inertial>
-            <visual>
-                <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
-                <geometry>
-                    <mesh filename="${mesh_file}"/>
-                </geometry>
-                <material name="${material_name}">
-                    <color rgba="${color} ${opacity}"/>
-                </material>
-            </visual>
-            <collision>
-                <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
-                <geometry>
-                    <mesh filename="${mesh_file}"/>
-                </geometry>
-                <material name="${material_name}">
-                    <color rgba="${color} ${opacity}"/>
-                </material>
-            </collision>
-        </link>
-    </xacro:macro>
 
     <!-- base link -->
     <link name="base_link">
@@ -119,37 +88,45 @@
 
 
     <!-- proximal link -->
-    <xacro:dynamic_link
-            name="proximal_link"
+    <link name="proximal_link">
+        <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${proximal_mesh}"
+            mesh_file="${proximal_mesh}"/>
+        <xacro:add_inertia
             x="0.0399"
             y="0.2115"
             z="0.047138"
             m="0.180"/>
+    </link>
+
 
     <!-- central link -->
-    <xacro:dynamic_link
-            name="intermediate_link"
+    <link name="intermediate_link">
+        <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${central_mesh}"
+            mesh_file="${central_mesh}"/>
+        <xacro:add_inertia
             x="0.0419"
             y="0.206"
             z="0.044276"
             m="0.180"/>
+    </link>
+
 
     <!-- distal link -->
-    <xacro:dynamic_link
-            name="tip_link"
+    <link name="tip_link">
+        <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${distal_mesh}"
+            mesh_file="${distal_mesh}"/>
+        <xacro:add_inertia
             x="0.027317"
             y="0.183"
             z="0.024"
             m="0.02"/>
+    </link>
     <link name="padding_link">
         <xacro:add_geometry
             origin_rpy="0 0 0"
