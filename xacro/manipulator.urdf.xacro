@@ -100,9 +100,8 @@
             m="0.180"/>
     </link>
 
-
     <!-- central link -->
-    <link name="intermediate_link">
+    <link name="central_link">
         <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
@@ -114,9 +113,8 @@
             m="0.180"/>
     </link>
 
-
     <!-- distal link -->
-    <link name="tip_link">
+    <link name="distal_link">
         <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
@@ -127,36 +125,36 @@
             z="0.024"
             m="0.02"/>
     </link>
-    <link name="padding_link">
+    <link name="distal_padding_link">
         <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${distal_padding_mesh}"/>
     </link>
     <joint name="tip_to_padding" type="fixed">
-        <parent link="tip_link"/>
-        <child link="padding_link"/>
+        <parent link="distal_link"/>
+        <child link="distal_padding_link"/>
         <origin xyz="-0.0125 -0.16 0"/>
     </joint>
 
     <!-- kinematics -->
-    <joint name="holder_to_proximal" type="revolute">
+    <joint name="base_proximal_joint" type="revolute">
         <parent link="base_holder_link"/>
         <child link="proximal_link"/>
-        <limit effort="1000" lower="0" upper="3.14159265359" velocity="1000"/>
+        <limit effort="1000" lower="0" upper="3.14" velocity="1000"/>
         <axis rpy="0 0 0" xyz="0 1 0"/>
         <origin rpy="0 -1.5708 0" xyz="0 0 0"/>
     </joint>
-    <joint name="proximal_to_intermediate" type="revolute">
+    <joint name="proximal_central_joint" type="revolute">
         <parent link="proximal_link"/>
-        <child link="intermediate_link"/>
+        <child link="central_link"/>
         <limit effort="1000" lower="-5.846853" upper="0" velocity="1000"/>
         <axis rpy="0 0 0" xyz="-1 0 0"/>
         <origin rpy="2.9234265 0 0" xyz="0.014 0.02695 0"/>
     </joint>
-    <joint name="intermediate_to_tip" type="revolute">
-        <parent link="intermediate_link"/>
-        <child link="tip_link"/>
+    <joint name="central_distal_joint" type="revolute">
+        <parent link="central_link"/>
+        <child link="distal_link"/>
         <limit effort="1000" lower="0" upper="6.00394" velocity="1000"/>
         <axis rpy="0 0 0" xyz="1 0 0"/>
         <origin rpy="-2.9 0 0" xyz="0 -0.16 0"/>
