@@ -38,7 +38,7 @@
     <xacro:property name="tip_z" value="0.024" />
     <xacro:property name="tip_m" value="0.02" />
 
-
+    <!-- Some macros for convenience -->
     <xacro:macro name="static_link" params="name origin_rpy origin_xyz mesh_file">
         <link name="${name}">
             <visual>
@@ -61,11 +61,7 @@
             </collision>
         </link>
     </xacro:macro>
-
-
-
-
-    <xacro:macro name="my_link" params="name origin_rpy origin_xyz
+    <xacro:macro name="dynamic_link" params="name origin_rpy origin_xyz
                                         mesh_file x y z m">
         <link name="${name}">
             <inertial>
@@ -98,28 +94,35 @@
         </link>
     </xacro:macro>
 
-    <!-- World Link -->
-
+    <!-- base link -->
     <xacro:static_link
             name="base_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${base_mesh}"/>
     <xacro:static_link
-            name="holder_link"
+            name="base_holder_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${base_holder_mesh}"/>
     <xacro:static_link
-            name="stage_link"
+            name="base_stage_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${base_stage_mesh}"/>
+    <joint name="base_holder_to_stage" type="fixed">
+        <parent link="base_holder_link"/>
+        <child link="base_stage_link"/>
+        <origin xyz="0 0 -0.2665"/>
+    </joint>
+    <joint name="base_holder_to_base" type="fixed">
+        <parent link="base_holder_link"/>
+        <child link="base_link"/>
+        <origin xyz="0 0.20595 0"/>
+    </joint>
 
-
-
-
-    <xacro:my_link
+    <!-- proximal link -->
+    <xacro:dynamic_link
             name="proximal_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
@@ -128,7 +131,9 @@
             y="${proximal_y}"
             z="${proximal_z}"
             m="${proximal_m}"/>
-    <xacro:my_link
+
+    <!-- central link -->
+    <xacro:dynamic_link
             name="intermediate_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
@@ -137,7 +142,9 @@
             y="${intermediate_y}"
             z="${intermediate_z}"
             m="${intermediate_m}"/>
-    <xacro:my_link
+
+    <!-- distal link -->
+    <xacro:dynamic_link
             name="tip_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
@@ -146,7 +153,7 @@
             y="${tip_y}"
             z="${tip_z}"
             m="${tip_m}"/>
-    <xacro:my_link
+    <xacro:dynamic_link
             name="padding_link"
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
@@ -155,25 +162,19 @@
             y="0.01"
             z="0.01"
             m="0.005"/>
-
-
-
-    <joint name="holder_to_stage" type="fixed">
-        <parent link="holder_link"/>
-        <child link="stage_link"/>
-        <origin xyz="0 0 -0.2665"/>
+    <joint name="tip_to_padding" type="fixed">
+        <parent link="tip_link"/>
+        <child link="padding_link"/>
+        <origin xyz="-0.0125 -0.16 0"/>
     </joint>
+
+    <!-- kinematics -->
     <joint name="holder_to_proximal" type="revolute">
-        <parent link="holder_link"/>
+        <parent link="base_holder_link"/>
         <child link="proximal_link"/>
         <limit effort="1000" lower="0" upper="3.14159265359" velocity="1000"/>
         <axis rpy="0 0 0" xyz="0 1 0"/>
         <origin rpy="0 -1.5708 0" xyz="0 0 0"/>
-    </joint>
-    <joint name="holder_to_base" type="fixed">
-        <parent link="holder_link"/>
-        <child link="base_link"/>
-        <origin xyz="0 0.20595 0"/>
     </joint>
     <joint name="proximal_to_intermediate" type="revolute">
         <parent link="proximal_link"/>
@@ -189,11 +190,7 @@
         <axis rpy="0 0 0" xyz="1 0 0"/>
         <origin rpy="-2.9 0 0" xyz="0 -0.16 0"/>
     </joint>
-    <joint name="tip_to_padding" type="fixed">
-        <parent link="tip_link"/>
-        <child link="padding_link"/>
-        <origin xyz="-0.0125 -0.16 0"/>
-    </joint>
+
 
 
 
