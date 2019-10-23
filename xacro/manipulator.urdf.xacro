@@ -1,4 +1,16 @@
 <?xml version="1.0" ?>
+<!--
+
+THIS FILE IS DEPRECATED!
+
+It only remains for legacy support but may be deleted anytime in the future
+without warning!
+
+Use instead finger_with_stage.urdf.xacro which defines the same setup (finger
+robot with stage) but defines frames in a more standard way and is a bit more
+nicely organized.
+
+-->
 <robot name="manipulator"
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
