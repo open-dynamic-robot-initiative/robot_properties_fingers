@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<robot name="stage" xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+
+    <xacro:include filename="macros.xacro" />
+
+    <!-- Meshes -->
+    <xacro:property name="mesh_file_extension" value="stl"/>
+    <xacro:property name="mesh_dir" value="package://robot_properties_manipulator/meshes/${mesh_file_extension}"/>
+    <xacro:property name="stage_mesh" value="${mesh_dir}/Stage_simplified.${mesh_file_extension}"/>
+
+    <!-- add the "stage" -->
+    <link name="stage_link">
+        <xacro:add_geometry
+            origin_rpy="0 0 0"
+            origin_xyz="0 0 0"
+            mesh_file="${stage_mesh}"/>
+    </link>
+
+</robot>
+
+
