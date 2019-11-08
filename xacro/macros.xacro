@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<!-- Some macros for convenience -->
+<robot xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+
+    <xacro:property name="material_name" value="material"/>
+    <xacro:property name="color" value="0.6 0.6 1.0"/>
+    <xacro:property name="opacity" value="1.0"/>
+
+    <xacro:macro name="add_geometry" params="origin_rpy origin_xyz mesh_file">
+        <visual>
+            <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
+            <geometry>
+                <mesh filename="${mesh_file}"/>
+            </geometry>
+            <material name="${material_name}">
+                <color rgba="${color} ${opacity}"/>
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
+            <geometry>
+                <mesh filename="${mesh_file}"/>
+            </geometry>
+            <material name="${material_name}">
+                <color rgba="${color} ${opacity}"/>
+            </material>
+        </collision>
+    </xacro:macro>
+
+    <xacro:macro name="add_inertia" params="length_x length_y length_z mass com">
+        <inertial>
+            <origin rpy="0 0 0" xyz="${com}"/>
+            <mass value="${mass}"/>
+            <inertia
+                    ixx="${1./12. * mass * (length_y*length_y + length_z*length_z)}"
+                    iyy="${1./12. * mass * (length_x*length_x + length_z*length_z)}"
+                    izz="${1./12. * mass * (length_x*length_x + length_y*length_y)}"
+                    ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </xacro:macro>
+
+</robot>
