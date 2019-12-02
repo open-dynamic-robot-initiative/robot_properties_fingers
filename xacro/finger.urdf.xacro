@@ -103,6 +103,11 @@
             origin_rpy="${pi/2} 0 0"
             origin_xyz="${mesh_x_offset} 0 0"
             mesh_file="${lower_link_mesh}"/>
+        <xacro:add_geometry
+            origin_rpy="0 0 0"
+            origin_xyz="0 0 -${lower_joint_to_tip_distance}"
+            mesh_file="${tip_padding_mesh}"/>
+
         <xacro:add_inertia
             length_x="0.01"
             length_y="0.01"
@@ -111,16 +116,11 @@
             com="0 0 -0.07"/>
     </link>
 
-    <!-- fixed link for padding around the finger tip -->
-    <link name="finger_tip_padding_link">
-        <xacro:add_geometry
-            origin_rpy="0 0 0"
-            origin_xyz="0 0 0"
-            mesh_file="${tip_padding_mesh}"/>
-    </link>
-    <joint name="finger_lower_to_padding_joint" type="fixed">
+    <!-- fixed link for finger tip -->
+    <link name="finger_tip_link" />
+    <joint name="finger_lower_to_tip_joint" type="fixed">
         <parent link="finger_lower_link"/>
-        <child link="finger_tip_padding_link"/>
+        <child link="finger_tip_link"/>
         <origin xyz="0 0 -${lower_joint_to_tip_distance}"/>
     </joint>
 
