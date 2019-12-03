@@ -48,6 +48,18 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${base_holder_mesh}"/>
+
+        <!--
+          for some reason this link needs to have some inertia defined,
+          otherwise the model won't show up in gazebo.
+        -->
+        <xacro:add_inertia
+            length_x="0.05"
+            length_y="0.05"
+            length_z="0.05"
+            mass="0.5"
+            com="0 0 0"/>
+
     </link>
     <joint name="finger_base_to_holder" type="fixed">
         <parent link="finger_base_link"/>
@@ -80,10 +92,10 @@
             mesh_file="${middle_link_mesh}"/>
         <xacro:add_inertia
             length_x="0.02"
-            length_y="0.14"
-            length_z="0.02"
+            length_y="0.02"
+            length_z="0.14"
             mass="0.2"
-            com="0 -0.06 0"/>
+            com="${2 * mesh_x_offset} 0 -0.06"/>
     </link>
 
     <link name="finger_lower_link">
@@ -91,24 +103,24 @@
             origin_rpy="${pi/2} 0 0"
             origin_xyz="${mesh_x_offset} 0 0"
             mesh_file="${lower_link_mesh}"/>
-        <xacro:add_inertia
-            length_x="0.01"
-            length_y="0.14"
-            length_z="0.01"
-            mass="0.05"
-            com="0 -0.07 0"/>
-    </link>
-
-    <!-- fixed link for padding around the finger tip -->
-    <link name="finger_tip_padding_link">
         <xacro:add_geometry
             origin_rpy="0 0 0"
-            origin_xyz="0 0 0"
+            origin_xyz="0 0 -${lower_joint_to_tip_distance}"
             mesh_file="${tip_padding_mesh}"/>
+
+        <xacro:add_inertia
+            length_x="0.01"
+            length_y="0.01"
+            length_z="0.14"
+            mass="0.05"
+            com="0 0 -0.07"/>
     </link>
-    <joint name="finger_lower_to_padding_joint" type="fixed">
+
+    <!-- fixed link for finger tip -->
+    <link name="finger_tip_link" />
+    <joint name="finger_lower_to_tip_joint" type="fixed">
         <parent link="finger_lower_link"/>
-        <child link="finger_tip_padding_link"/>
+        <child link="finger_tip_link"/>
         <origin xyz="0 0 -${lower_joint_to_tip_distance}"/>
     </joint>
 
