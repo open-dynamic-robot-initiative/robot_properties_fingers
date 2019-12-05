@@ -59,9 +59,7 @@
                 origin_xyz="0 ${upper_link_length} 0"
                 mesh_file="${upper_base_mesh}"/>
         </link>
-
-        <!-- base_holder is added if the flag is set to 1 (i.e. in case of single finger) -->
-        <xacro:if value="${base_holder == 1}">
+        <xacro:if value="${base_holder == 1}"> <!-- base_holder is added in case of single finger -->
             <link name="finger_upper_holder_link${idx}">
                 <xacro:add_geometry
                     origin_rpy="0 0 0"
