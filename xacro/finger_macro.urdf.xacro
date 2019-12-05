@@ -31,19 +31,23 @@
     <xacro:property name="mesh_x_offset" value="0.014" />
     <xacro:property name="centre_offset" value="0.014" />
     <xacro:property name="lower_link_mesh_scale" value="0.001 0.001 0.001" />
-    <xacro:property name="tip_padding" value="0" /> <!-- Flag for tip_padding. 0 = False -->
-    <xacro:property name="base_holder" value="0" /> <!-- Flag for upper base_holder. 0 = False -->
+    <xacro:property name="tip_padding" value="0" />
+    <xacro:property name="base_holder" value="0" />
 
 
-
+    <!--
+    Defining the "finger" macro which is used for both single and tri-finger.
+    The macro takes "idx" as a parameter for the three fingers.
+    In case of single finger, no "idx" value is passed.
+    -->
     <xacro:macro name="finger" params="idx:=''">
 
-        <!-- In case of single finger (i.e. when no idx is passed), we change the default values of the following. -->
+        <!-- In case of single finger (i.e. when no idx is passed), we change the default values of the following variables. -->
         <xacro:if value="${idx == ''}">
-            <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_file_extension}"/>
-            <xacro:property name="lower_link_mesh_scale" value="1 1 1" />
-            <xacro:property name="tip_padding" value="1" />
-            <xacro:property name="base_holder" value="1" />
+            <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_file_extension}"/> <!-- mesh for single finger -->
+            <xacro:property name="lower_link_mesh_scale" value="1 1 1" /> <!-- lower_link_mesh has different scale for single and 3-finger -->
+            <xacro:property name="tip_padding" value="1" /> <!-- Flag for tip_padding. 1 = True -->
+            <xacro:property name="base_holder" value="1" /> <!-- Flag for upper base_holder. 1 = True -->
         </xacro:if>
 
         <!--
