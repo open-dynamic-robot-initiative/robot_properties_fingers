@@ -13,6 +13,9 @@
     <xacro:include filename="finger_macro.urdf.xacro" />
 
     <!--
-    Fixed links for the finger base (parts where the upper link is mounted).
+    Simply calling the "finger" macro (without passing any idx) implies a call for single finger.
+    The parameters are automatically set inside the finger_macro file, to accomodate for single finger.
     -->
+    <finger/>
+
 </robot>
