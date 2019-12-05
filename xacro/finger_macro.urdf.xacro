@@ -65,6 +65,12 @@
                     origin_rpy="0 0 0"
                     origin_xyz="0 0 0"
                     mesh_file="${base_holder_mesh}"/>
+
+                <!--
+                  for some reason this link needs to have some inertia defined,
+                  otherwise the model won't show up in gazebo
+                -->
+                
                 <xacro:add_inertia
                     length_x="0.05"
                     length_y="0.05"
