@@ -19,7 +19,7 @@
         <collision>
             <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
             <geometry>
-                <mesh filename="${mesh_file}"/>
+                <mesh scale="${mesh_scale} ${mesh_scale} ${mesh_scale}" filename="${mesh_file}"/>
             </geometry>
             <material name="${material_name}">
                 <color rgba="${color} ${opacity}"/>
