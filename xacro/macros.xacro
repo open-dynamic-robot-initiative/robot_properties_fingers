@@ -6,11 +6,11 @@
     <xacro:property name="color" value="0.6 0.6 1.0"/>
     <xacro:property name="opacity" value="1.0"/>
 
-    <xacro:macro name="add_geometry" params="origin_rpy origin_xyz mesh_file mesh_scale:='1 1 1'">
+    <xacro:macro name="add_geometry" params="origin_rpy origin_xyz mesh_file mesh_scale:='1'">
         <visual>
             <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
             <geometry>
-                <mesh scale="${mesh_scale}" filename="${mesh_file}"/>
+                <mesh scale="${mesh_scale} ${mesh_scale} ${mesh_scale}" filename="${mesh_file}"/>
             </geometry>
             <material name="${material_name}">
                 <color rgba="${color} ${opacity}"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot name="finger" xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+<robot xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
     <!--
     Frames are defined such that they all align with the base frame when all
     joints are at position zero.
@@ -30,37 +30,41 @@
     <xacro:property name="lower_joint_to_tip_distance" value="0.16" />
     <xacro:property name="mesh_x_offset" value="0.014" />
     <xacro:property name="centre_offset" value="0.014" />
-    <xacro:property name="lower_link_mesh_scale" value="0.001 0.001 0.001" />
-    <xacro:property name="tip_padding" value="0" />
-    <xacro:property name="base_holder" value="0" />
+    <!--
+    ROS uses meters for length. Since the new lower_link_mesh and the stage_mesh is made using millimeters as units,
+    scaling them down to 1/1000 of their current size loads them with the correct size.
+    -->
+    <xacro:property name="lower_link_mesh_scale" value="0.001" />
+    <xacro:property name="tip_padding" value="0" /> <!-- if this flag is set to 1 (True), finger padding is added at the finger tips -->
+    <xacro:property name="base_holder" value="0" /> <!-- if this flag is set to 1 (True), an upper base_holder is added -->
 
 
     <!--
     Defining the "finger" macro which is used for both single and tri-finger.
-    The macro takes "idx" as a parameter for the three fingers.
-    In case of single finger, no "idx" value is passed.
+    The macro takes "suffix" as a parameter to differentiate between multiple fingers
+    In case of single finger, no "suffix" value is passed.
     -->
-    <xacro:macro name="finger" params="idx:=''">
+    <xacro:macro name="finger" params="suffix:=''">
 
-        <!-- In case of single finger (i.e. when no idx is passed), we change the default values of the following variables. -->
-        <xacro:if value="${idx == ''}">
-            <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_file_extension}"/> <!-- mesh for single finger -->
-            <xacro:property name="lower_link_mesh_scale" value="1 1 1" /> <!-- lower_link_mesh has different scale for single and 3-finger -->
-            <xacro:property name="tip_padding" value="1" /> <!-- Flag for tip_padding. 1 = True -->
-            <xacro:property name="base_holder" value="1" /> <!-- Flag for upper base_holder. 1 = True -->
+        <!-- In case of single finger (i.e. when no suffix is passed), we change the default values of the following variables. -->
+        <xacro:if value="${suffix == ''}">
+            <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_file_extension}"/> <!-- lower_link_mesh for single finger -->
+            <xacro:property name="lower_link_mesh_scale" value="1" /> <!-- not changing the scale here. Therefore, keeping the value to 1 (original scale) -->
+            <xacro:property name="tip_padding" value="1" />
+            <xacro:property name="base_holder" value="1" />
         </xacro:if>
 
         <!--
         Fixed links for the finger base (parts where the upper link is mounted).
         -->
-        <link name="finger_base_link${idx}">
+        <link name="finger_base_link${suffix}">
             <xacro:add_geometry
                 origin_rpy="0 0 0"
                 origin_xyz="0 ${upper_link_length} 0"
                 mesh_file="${upper_base_mesh}"/>
         </link>
         <xacro:if value="${base_holder == 1}"> <!-- base_holder is added in case of single finger -->
-            <link name="finger_upper_holder_link${idx}">
+            <link name="finger_upper_holder_link${suffix}">
                 <xacro:add_geometry
                     origin_rpy="0 0 0"
                     origin_xyz="0 0 0"
@@ -70,7 +74,7 @@
                   for some reason this link needs to have some inertia defined,
                   otherwise the model won't show up in gazebo
                 -->
-                
+
                 <xacro:add_inertia
                     length_x="0.05"
                     length_y="0.05"
@@ -78,9 +82,9 @@
                     mass="0.5"
                     com="0 0 0"/>
             </link>
-            <joint name="finger_base_to_holder${idx}" type="fixed">
-                <parent link="finger_base_link${idx}"/>
-                <child link="finger_upper_holder_link${idx}"/>
+            <joint name="finger_base_to_holder${suffix}" type="fixed">
+                <parent link="finger_base_link${suffix}"/>
+                <child link="finger_upper_holder_link${suffix}"/>
                 <origin xyz="0 -${upper_joint_center_offset} 0" rpy="0 0 0" />
             </joint>
         </xacro:if>
@@ -89,7 +93,7 @@
 
         <!-- TODO inertia parameters don't look correct, they cant be same for upper and middle! -->
 
-        <link name="finger_upper_link${idx}">
+        <link name="finger_upper_link${suffix}">
             <xacro:add_geometry
                 origin_rpy="0 0 0"
                 origin_xyz="0 -${upper_joint_center_offset} 0"
@@ -102,7 +106,7 @@
                 com="0 0.06 0"/>
         </link>
 
-        <link name="finger_middle_link${idx}">
+        <link name="finger_middle_link${suffix}">
             <xacro:add_geometry
                 origin_rpy="${pi/2} 0 0"
                 origin_xyz="${mesh_x_offset} 0 0"
@@ -115,7 +119,7 @@
                 com="${2 * mesh_x_offset} 0 -0.06"/>
         </link>
 
-        <link name="finger_lower_link${idx}">
+        <link name="finger_lower_link${suffix}">
             <xacro:add_geometry
                 origin_rpy="${pi/2} 0 0"
                 origin_xyz="${mesh_x_offset} 0 0"
@@ -136,10 +140,10 @@
         </link>
 
         <!-- fixed link for finger tip -->
-        <link name="finger_tip_link${idx}" />
-        <joint name="finger_lower_to_tip_joint${idx}" type="fixed">
-            <parent link="finger_lower_link${idx}"/>
-            <child link="finger_tip_link${idx}"/>
+        <link name="finger_tip_link${suffix}" />
+        <joint name="finger_lower_to_tip_joint${suffix}" type="fixed">
+            <parent link="finger_lower_link${suffix}"/>
+            <child link="finger_tip_link${suffix}"/>
             <origin xyz="0 0 -${lower_joint_to_tip_distance}"/>
         </joint>
 
@@ -150,25 +154,25 @@
         should be verified on the real system (especially the finger tip limits look
         a bit too big when visualizing the model. -->
 
-        <joint name="finger_base_to_upper_joint${idx}" type="revolute">
-            <parent link="finger_base_link${idx}"/>
-            <child link="finger_upper_link${idx}"/>
+        <joint name="finger_base_to_upper_joint${suffix}" type="revolute">
+            <parent link="finger_base_link${suffix}"/>
+            <child link="finger_upper_link${suffix}"/>
             <limit effort="1000" lower="-${pi/2}" upper="${pi/2}" velocity="1000"/>
             <axis xyz="0 1 0"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </joint>
 
-        <joint name="finger_upper_to_middle_joint${idx}" type="revolute">
-            <parent link="finger_upper_link${idx}"/>
-            <child link="finger_middle_link${idx}"/>
+        <joint name="finger_upper_to_middle_joint${suffix}" type="revolute">
+            <parent link="finger_upper_link${suffix}"/>
+            <child link="finger_middle_link${suffix}"/>
             <limit effort="1000" lower="${radians(-77.5)}" upper="${radians(257.5)}" velocity="1000"/>
             <axis xyz="-1 0 0"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </joint>
 
-        <joint name="finger_middle_to_lower_joint${idx}" type="revolute">
-            <parent link="finger_middle_link${idx}"/>
-            <child link="finger_lower_link${idx}"/>
+        <joint name="finger_middle_to_lower_joint${suffix}" type="revolute">
+            <parent link="finger_middle_link${suffix}"/>
+            <child link="finger_lower_link${suffix}"/>
             <limit effort="1000" lower="${radians(-172)}" upper="${radians(172)}" velocity="1000"/>
             <axis xyz="1 0 0"/>
             <origin rpy="0 0 0" xyz="0 0 -${middle_to_lower_joint_distance}"/>
