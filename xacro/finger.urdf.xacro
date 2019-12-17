@@ -18,4 +18,15 @@
     -->
     <xacro:finger/>
 
+    <!--
+    Define the global base link and place the finger relative to it.
+    -->
+
+    <link name="base_link" />
+    <joint name="base_to_finger" type="fixed">
+        <parent link="base_link"/>
+        <child link="finger_base_link"/>
+        <origin xyz="0 0 0.34"/>
+    </joint>
+
 </robot>
