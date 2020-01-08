@@ -34,7 +34,7 @@
     ROS uses meters for length. Since the new lower_link_mesh and the stage_mesh is made using millimeters as units,
     scaling them down to 1/1000 of their current size loads them with the correct size.
     -->
-    <xacro:property name="lower_link_mesh_scale" value="0.001" />
+    <xacro:property name="lower_link_mesh_scale" value="1" />
     <xacro:property name="tip_padding" value="0" /> <!-- if this flag is set to 1 (True), finger padding is added at the finger tips -->
     <xacro:property name="base_holder" value="0" /> <!-- if this flag is set to 1 (True), an upper base_holder is added -->
     <xacro:property name="tip_mass" value="0.075" />
