@@ -16,7 +16,7 @@
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
             mesh_file="${stage_mesh}"
-            mesh_scale="0.001"/>
+            mesh_scale="1"/>
             <!--
             ROS uses meters for length. Since the new lower_link_mesh and the stage_mesh is made using millimeters as units,
             scaling them down to 1/1000 of their current size loads them with the correct size.
