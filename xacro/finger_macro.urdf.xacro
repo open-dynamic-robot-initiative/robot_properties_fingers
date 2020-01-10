@@ -63,6 +63,12 @@
                 origin_rpy="0 0 0"
                 origin_xyz="0 ${upper_link_length} 0"
                 mesh_file="${upper_base_mesh}"/>
+            <xacro:add_inertia
+                length_x="0.05"
+                length_y="0.05"
+                length_z="0.05"
+                mass="1"
+                com="0 0 0"/>
         </link>
         <xacro:if value="${base_holder == 1}"> <!-- base_holder is added in case of single finger -->
             <link name="finger_upper_holder_link${suffix}">

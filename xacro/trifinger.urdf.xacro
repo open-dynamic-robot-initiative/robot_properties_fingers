@@ -6,7 +6,14 @@
     <xacro:include filename="macros.xacro" />
 
     <!-- Define the global base_link and place all other objects relative to it. -->
-    <link name="base_link" />
+    <link name="base_link">
+      <xacro:add_inertia
+          length_x="0.005"
+          length_y="0.005"
+          length_z="0.005"
+          mass="1"
+          com="0 0 0"/>
+    </link>      
 
     <!-- Define the upper holder -->
     <link name="upper_holder_link" />
