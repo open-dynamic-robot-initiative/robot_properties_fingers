@@ -22,7 +22,14 @@
     Define the global base link and place the finger relative to it.
     -->
 
-    <link name="base_link" />
+    <link name="base_link">
+      <xacro:add_inertia
+          length_x="0.005"
+          length_y="0.005"
+          length_z="0.005"
+          mass="1"
+          com="0 0 0"/>
+    </link>
     <joint name="base_to_finger" type="fixed">
         <parent link="base_link"/>
         <child link="finger_base_link"/>
