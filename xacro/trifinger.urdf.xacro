@@ -13,7 +13,7 @@
           length_z="0.005"
           mass="1"
           com="0 0 0"/>
-    </link>      
+    </link>
 
     <!-- Define the upper holder -->
     <link name="upper_holder_link" />
@@ -23,10 +23,20 @@
         <origin xyz="0 0 0.34"/>
     </joint>
 
+    <material name="finger_0_material">
+        <color rgba="0.6 0.0 0.0 1.0" />
+    </material>
+    <material name="finger_120_material">
+        <color rgba="0.0 0.6 0.0 1.0" />
+    </material>
+    <material name="finger_240_material">
+        <color rgba="0.0 0.0 0.6 1.0" />
+    </material>
+
     <!-- Define the three fingers and place them relative to the upper holder -->
-    <xacro:finger suffix="_0"/>
-    <xacro:finger suffix="_120"/>
-    <xacro:finger suffix="_240"/>
+    <xacro:finger suffix="_0" material="finger_0_material" />
+    <xacro:finger suffix="_120" material="finger_120_material" />
+    <xacro:finger suffix="_240" material="finger_240_material" />
 
     <xacro:property name="offset" value="0.04"/> <!-- upper_holder to finger offset -->
     <xacro:property name="angle_0" value="${radians(0)}"/>
