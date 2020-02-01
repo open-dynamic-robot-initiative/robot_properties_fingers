@@ -3,6 +3,10 @@
 
     <xacro:include filename="macros.xacro" />
 
+    <material name="stage_material">
+        <color rgba="0.8 0.8 0.8 1.0" />
+    </material>
+
     <!-- Meshes -->
     <xacro:property name="mesh_file_extension" value="stl"/>
     <xacro:property name="mesh_dir" value="package://robot_properties_manipulator/meshes/${mesh_file_extension}"/>
@@ -14,7 +18,8 @@
         <xacro:add_geometry
             origin_rpy="0 0 0"
             origin_xyz="0 0 0"
-            mesh_file="${stage_mesh}"/>
+            mesh_file="${stage_mesh}"
+            material="stage_material" />
         <xacro:add_inertia
             length_x="0.3"
             length_y="0.3"
