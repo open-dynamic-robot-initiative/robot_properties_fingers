@@ -109,9 +109,9 @@
                 mesh_file="${upper_link_mesh}"
                 material="${material}" />
             <xacro:add_inertia
-                length_x="0.02"
+                length_x="0.04"
                 length_y="0.14"
-                length_z="0.02"
+                length_z="0.04"
                 mass="0.2"
                 com="0 0.06 0"/>
         </link>
@@ -123,11 +123,11 @@
                 mesh_file="${middle_link_mesh}"
                 material="${material}" />
             <xacro:add_inertia
-                length_x="0.02"
-                length_y="0.02"
+                length_x="0.04"
+                length_y="0.04"
                 length_z="0.14"
                 mass="0.2"
-                com="${2 * mesh_x_offset} 0 -0.06"/>
+                com="${2 * mesh_x_offset} 0 -0.08"/>
         </link>
 
         <link name="finger_lower_link${suffix}">
@@ -145,11 +145,11 @@
                     material="${material}" />
             </xacro:if>
             <xacro:add_inertia
-                length_x="0.01"
-                length_y="0.01"
+                length_x="0.02"
+                length_y="0.02"
                 length_z="0.14"
                 mass="0.05"
-                com="0 0 -0.07"/>
+                com="0 0 -0.06"/>
         </link>
 
         <!-- fixed link for finger tip -->
