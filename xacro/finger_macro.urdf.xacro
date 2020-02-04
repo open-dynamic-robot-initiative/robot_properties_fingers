@@ -37,7 +37,7 @@
     <xacro:property name="lower_link_mesh_scale" value="1" />
     <xacro:property name="tip_padding" value="0" /> <!-- if this flag is set to 1 (True), finger padding is added at the finger tips -->
     <xacro:property name="base_holder" value="0" /> <!-- if this flag is set to 1 (True), an upper base_holder is added -->
-    <xacro:property name="tip_mass" value="0.075" />
+    <xacro:property name="tip_mass" value="0.02" />
 
     <!--
     Defining the "finger" macro which is used for both single and tri-finger.
@@ -52,7 +52,7 @@
             <xacro:property name="lower_link_mesh_scale" value="1" /> <!-- not changing the scale here. Therefore, keeping the value to 1 (original scale) -->
             <xacro:property name="tip_padding" value="1" />
             <xacro:property name="base_holder" value="1" />
-            <xacro:property name="tip_mass" value="0.025" />
+            <xacro:property name="tip_mass" value="0.002" />
         </xacro:if>
 
         <!--
@@ -148,7 +148,7 @@
                 length_x="0.02"
                 length_y="0.02"
                 length_z="0.14"
-                mass="0.05"
+                mass="0.01"
                 com="0 0 -0.06"/>
         </link>
 
