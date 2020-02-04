@@ -193,7 +193,8 @@
         <joint name="finger_middle_to_lower_joint${suffix}" type="revolute">
             <parent link="finger_middle_link${suffix}"/>
             <child link="finger_lower_link${suffix}"/>
-            <limit effort="1000" lower="${radians(-172)}" upper="${radians(172)}" velocity="1000"/>
+            <!-- <limit effort="1000" lower="${radians(-172)}" upper="${radians(172)}" velocity="1000"/> -->
+            <limit effort="1000" lower="${radians(-172)}" upper="${radians(-2)}" velocity="1000"/>
             <axis xyz="1 0 0"/>
             <origin rpy="0 0 0" xyz="0 0 -${middle_to_lower_joint_distance}"/>
         </joint>
