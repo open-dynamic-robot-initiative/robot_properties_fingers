@@ -17,8 +17,8 @@
 
     <link name="stage_link">
         <xacro:add_geometry
-            origin_rpy="0 0 0"
-            origin_xyz="0 0 0"
+            rpy="0 0 0"
+            xyz="0 0 0"
             mesh_file="${stage_mesh}"
             mesh_scale="1"
             material="stage_material" />
