@@ -63,8 +63,8 @@
         -->
         <link name="finger_base_link${suffix}">
             <xacro:add_geometry
-                origin_rpy="0 0 0"
-                origin_xyz="0 ${upper_link_length} 0"
+                rpy="0 0 0"
+                xyz="0 ${upper_link_length} 0"
                 mesh_file="${upper_base_mesh}"
                 material="${material}" />
             <xacro:add_inertia
@@ -77,8 +77,8 @@
         <xacro:if value="${base_holder == 1}"> <!-- base_holder is added in case of single finger -->
             <link name="finger_upper_holder_link${suffix}">
                 <xacro:add_geometry
-                    origin_rpy="0 0 0"
-                    origin_xyz="0 0 0"
+                    rpy="0 0 0"
+                    xyz="0 0 0"
                     mesh_file="${base_holder_mesh}"
                     material="${material}" />
 
@@ -107,8 +107,8 @@
 
         <link name="finger_upper_link${suffix}">
             <xacro:add_geometry
-                origin_rpy="0 0 0"
-                origin_xyz="0 -${upper_joint_center_offset} 0"
+                rpy="0 0 0"
+                xyz="0 -${upper_joint_center_offset} 0"
                 mesh_file="${upper_link_mesh}"
                 material="${material}" />
             <xacro:add_inertia
@@ -121,8 +121,8 @@
 
         <link name="finger_middle_link${suffix}">
             <xacro:add_geometry
-                origin_rpy="${pi/2} 0 0"
-                origin_xyz="${mesh_x_offset} 0 0"
+                rpy="${pi/2} 0 0"
+                xyz="${mesh_x_offset} 0 0"
                 mesh_file="${middle_link_mesh}"
                 material="${material}" />
             <xacro:add_inertia
@@ -135,15 +135,15 @@
 
         <link name="finger_lower_link${suffix}">
             <xacro:add_geometry
-                origin_rpy="${pi/2} 0 0"
-                origin_xyz="${mesh_x_offset} 0 0"
+                rpy="${pi/2} 0 0"
+                xyz="${mesh_x_offset} 0 0"
                 mesh_file="${lower_link_mesh}"
                 mesh_scale="${lower_link_mesh_scale}"
                 material="${material}" />
             <xacro:if value="${tip_padding == 1}"> <!-- tip_padding is added in case of single finger -->
                 <xacro:add_geometry
-                    origin_rpy="0 0 0"
-                    origin_xyz="0 0 -${lower_joint_to_tip_distance}"
+                    rpy="0 0 0"
+                    xyz="0 0 -${lower_joint_to_tip_distance}"
                     mesh_file="${tip_padding_mesh}"
                     material="${material}" />
             </xacro:if>

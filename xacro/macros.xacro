@@ -3,16 +3,16 @@
 <robot xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
 
     <xacro:macro name="add_geometry"
-        params="origin_rpy origin_xyz mesh_file material mesh_scale:='1'">
+        params="rpy xyz mesh_file material mesh_scale:='1'">
         <visual>
-            <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
+            <origin rpy="${rpy}" xyz="${xyz}"/>
             <geometry>
                 <mesh scale="${mesh_scale} ${mesh_scale} ${mesh_scale}" filename="${mesh_file}"/>
             </geometry>
             <material name="${material}" />
         </visual>
         <collision>
-            <origin rpy="${origin_rpy}" xyz="${origin_xyz}"/>
+            <origin rpy="${rpy}" xyz="${xyz}"/>
             <geometry>
                 <mesh scale="${mesh_scale} ${mesh_scale} ${mesh_scale}" filename="${mesh_file}"/>
             </geometry>
