@@ -1,2 +1,2 @@
-src/py_robot_properties_manipulator/envs/__init__.pyc
+*.pyc
 urdf/*

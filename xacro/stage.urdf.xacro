@@ -9,7 +9,7 @@
 
     <!-- Meshes -->
     <xacro:property name="mesh_file_extension" value="stl"/>
-    <xacro:property name="mesh_dir" value="package://robot_properties_manipulator/meshes/${mesh_file_extension}"/>
+    <xacro:property name="mesh_dir" value="package://robot_properties_fingers/meshes/${mesh_file_extension}"/>
 
     <xacro:property name="stage_mesh" value="${mesh_dir}/Stage_simplified.${mesh_file_extension}"/>
 

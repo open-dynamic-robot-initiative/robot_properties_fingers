@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>robot_properties_manipulator</name>
+  <name>robot_properties_fingers</name>
   <version>1.0.0</version>
-  <description>robot_properties_manipulator</description>
+  <description>robot_properties_fingers</description>
   <author email="ilija.stanojkovic@tuebingen.mpg.de">Ilija Stanojkovic</author>
   <maintainer email="ilija.stanojkovic@tuebingen.mpg.de">Ilija Stanojkovic</maintainer>
   <license>TODO</license>

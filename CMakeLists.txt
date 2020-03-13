@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 
-set(ROBOT manipulator)
-
-project(robot_properties_${ROBOT})
+project(robot_properties_fingers)
 
 # find dependencies using catkin
 find_package(catkin REQUIRED COMPONENTS
