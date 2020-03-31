@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<robot name="trifinger_stage"
+    xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+
+    <xacro:include filename="macros.xacro" />
+
+    <xacro:property name="mesh_dir" value="package://robot_properties_fingers/meshes/stl"/>
+    <xacro:property name="table_mesh" value="${mesh_dir}/trifinger_table_without_border.stl"/>
+    <xacro:property name="boundary_mesh" value="${mesh_dir}/high_table_boundary.stl"/>
+
+    <material name="table_material">
+        <color rgba="0.31 0.27 0.25 1.0" />
+    </material>
+    <material name="boundary_material">
+        <color rgba="0.95 0.95 0.95 1.0" />
+    </material>
+
+    <link name="table_link">
+        <xacro:add_geometry
+            rpy="0 0 0"
+            xyz="0 0 0"
+            mesh_file="${table_mesh}"
+            mesh_scale="1"
+            material="table_material" />
+        <xacro:add_inertia
+            length_x="0.71"
+            length_y="0.76"
+            length_z="0.01"
+            mass="2"
+            com="0 0 0"/>
+    </link>
+
+    <link name="boundary_link">
+        <xacro:add_geometry
+            rpy="0 0 0"
+            xyz="0 0 0"
+            mesh_file="${boundary_mesh}"
+            mesh_scale="1"
+            material="boundary_material" />
+        <xacro:add_inertia
+            length_x="0.56"
+            length_y="0.56"
+            length_z="0.17"
+            mass="2"
+            com="0 0 0"/>
+    </link>
+
+
+    <joint name="base_to_table" type="fixed">
+        <parent link="base_link"/>
+        <child link="table_link"/>
+        <origin xyz="0 0 0"/>
+    </joint>
+
+    <joint name="table_to_boundary" type="fixed">
+        <parent link="table_link"/>
+        <child link="boundary_link"/>
+        <origin xyz="0 0 0"/>
+    </joint>
+
+</robot>
+

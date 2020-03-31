@@ -3,43 +3,6 @@
     xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
 
     <xacro:include filename="trifinger.urdf.xacro" />
-    <xacro:include filename="macros.xacro" />
-
-    <!-- Adding the "stage" -->
-    <!-- Meshes -->
-    <xacro:property name="mesh_file_extension" value="stl"/>
-    <xacro:property name="mesh_dir" value="package://robot_properties_fingers/meshes/${mesh_file_extension}"/>
-    <xacro:property name="stage_mesh" value="${mesh_dir}/BL-M_Table_ASM_big.${mesh_file_extension}"/>
-
-    <material name="stage_material">
-        <color rgba="0.8 0.8 0.8 1.0" />
-    </material>
-
-    <link name="stage_link">
-        <xacro:add_geometry
-            rpy="0 0 0"
-            xyz="0 0 0"
-            mesh_file="${stage_mesh}"
-            mesh_scale="1"
-            material="stage_material" />
-        <xacro:add_inertia
-            length_x="0.3"
-            length_y="0.3"
-            length_z="0.05"
-            mass="1"
-            com="0 0 0"/>
-
-            <!--
-            ROS uses meters for length. Since the new lower_link_mesh and the stage_mesh is made using millimeters as units,
-            scaling them down to 1/1000 of their current size loads them with the correct size.
-            -->
-    </link>
-
-    <!-- Define the stage -->
-    <joint name="base_to_stage" type="fixed">
-        <parent link="base_link"/>
-        <child link="stage_link"/>
-        <origin xyz="0 0 0"/>
-    </joint>
+    <xacro:include filename="trifinger_stage.urdf.xacro" />
 
 </robot>
