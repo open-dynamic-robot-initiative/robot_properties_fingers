@@ -1,0 +1,179 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+    <!--
+    Frames are defined such that they all align with the base frame when all
+    joints are at position zero.
+
+    In zero-configuration the origins of all joints are in one line.
+    -->
+
+    <xacro:include filename="../macros.xacro" />
+
+    <xacro:property name="mesh_dir"
+        value="package://robot_properties_fingers/meshes/stl/edu"/>
+
+    <xacro:property name="base_front_width" value="0.006" />
+    <xacro:property name="offset_x_base_to_upper_link_front" value="0.0195" />
+    <xacro:property name="offset_x_base_to_front"
+        value="${offset_x_base_to_upper_link_front + base_front_width}" />
+    <xacro:property name="offset_z_base_to_top" value="0.08" />
+
+
+    <!--
+    Defining the "finger" macro which is used for both single and tri-finger.
+    The macro takes "suffix" as a parameter to differentiate between multiple fingers
+    In case of single finger, no "suffix" value is passed.
+    -->
+    <xacro:macro name="fingeredu" params="material suffix:=''">
+
+        <!--
+        Fixed links for the finger base (parts where the upper link is mounted).
+        -->
+        <link name="fingeredu_base_link${suffix}">
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="-0.17995 0 0"
+                mesh_file="${mesh_dir}/base_back.stl"
+                material="${material}" />
+
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="${offset_x_base_to_front} 0 0"
+                mesh_file="${mesh_dir}/base_front.stl"
+                material="${material}" />
+
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="${offset_x_base_to_front} 0.02 ${offset_z_base_to_top}"
+                mesh_file="${mesh_dir}/base_side_left.stl"
+                material="${material}" />
+
+            <!-- Disable this part.  It is not very relevant for collisions but
+                 would cause trouble in pybullet due to its concavity.
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="${offset_x_base_to_front} -0.02 ${offset_z_base_to_top}"
+                mesh_file="${mesh_dir}/base_side_right.stl"
+                material="${material}" />
+            -->
+
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="${offset_x_base_to_front} 0 ${offset_z_base_to_top}"
+                mesh_file="${mesh_dir}/base_top.stl"
+                material="${material}" />
+
+            <xacro:add_inertia
+                length_x="0.2"
+                length_y="0.3"
+                length_z="0.8"
+                mass="1"
+                com="-0.1 0 0.4"/>
+        </link>
+
+        <!-- The movable links (upper, middle and lower) of the finger. -->
+
+        <!-- FIXME inertias are not correct! -->
+
+        <link name="fingeredu_upper_link${suffix}">
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="${offset_x_base_to_upper_link_front} 0 0"
+                mesh_file="${mesh_dir}/upper_link.stl"
+                material="${material}" />
+
+            <inertial>
+                <!-- Note: This uses the values from the middle link, assuming
+                     that it is similar enough. -->
+                <!-- CoM is only estimated based -->
+                <origin rpy="0 0 0" xyz="-0.079 0 0"/>
+                <mass value="0.14854"/>
+                <inertia izz="0.00041" iyz="0.00000" ixz="0.00000"
+                                       iyy="0.00041" ixy="0.00005"
+                                                     ixx="0.00003" />
+            </inertial>
+
+        </link>
+
+        <link name="fingeredu_middle_link${suffix}">
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="0 0 0"
+                mesh_file="${mesh_dir}/middle_link.stl"
+                material="${material}" />
+
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 -0.019 -0.079"/>
+                <mass value="0.14854"/>
+                <inertia ixx="0.00041" ixy="0.00000" ixz="0.00000"
+                                       iyy="0.00041" iyz="0.00005"
+                                                     izz="0.00003" />
+            </inertial>
+
+        </link>
+
+        <link name="fingeredu_lower_link${suffix}">
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="0 0 0"
+                mesh_file="${mesh_dir}/lower_link.stl"
+                material="${material}" />
+
+            <!-- TODO: these are the interial values from the Solo lower leg
+                 link which is similar but not exactly the same to the FingerEdu
+                 lower link. -->
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 -0.009 -0.089"/>
+                <mass value="0.03070"/>
+                <inertia ixx="0.00012" ixy="0.00000" ixz="0.00000"
+                                       iyy="0.00012" iyz="0.00000"
+                                                     izz="0.00000" />
+            </inertial>
+
+        </link>
+
+        <!-- fixed link for finger tip -->
+        <link name="fingeredu_tip_link${suffix}">
+            <!-- TODO: Inertia of tip is just a very rough estimate -->
+            <xacro:add_inertia
+                length_x="0.01"
+                length_y="0.01"
+                length_z="0.01"
+                com="0 0 0"
+                mass="0.01"/>
+        </link>
+        <joint name="fingeredu_lower_to_tip_joint${suffix}" type="fixed">
+            <parent link="fingeredu_lower_link${suffix}"/>
+            <child link="fingeredu_tip_link${suffix}"/>
+            <origin xyz="0 -0.008 -0.16"/>
+        </joint>
+
+
+        <!-- kinematics -->
+
+        <joint name="fingeredu_base_to_upper_joint${suffix}" type="revolute">
+            <parent link="fingeredu_base_link${suffix}"/>
+            <child link="fingeredu_upper_link${suffix}"/>
+            <limit effort="1000" lower="-${pi/2}" upper="${pi/2}" velocity="1000"/>
+            <axis xyz="-1 0 0"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+        </joint>
+
+        <joint name="fingeredu_upper_to_middle_joint${suffix}" type="revolute">
+            <parent link="fingeredu_upper_link${suffix}"/>
+            <child link="fingeredu_middle_link${suffix}"/>
+            <limit effort="1000" lower="-${pi/2}" upper="${pi/2}" velocity="1000"/>
+            <axis xyz="0 1 0"/>
+            <origin rpy="0 0 0" xyz="0 -0.014 0"/>
+        </joint>
+
+        <joint name="fingeredu_middle_to_lower_joint${suffix}" type="revolute">
+            <parent link="fingeredu_middle_link${suffix}"/>
+            <child link="fingeredu_lower_link${suffix}"/>
+            <limit effort="1000" lower="-${pi}" upper="${pi}" velocity="1000"/>
+            <axis xyz="0 1 0"/>
+            <origin rpy="0 0 0" xyz="0 -0.03745 -0.16"/>
+        </joint>
+
+    </xacro:macro>
+</robot>

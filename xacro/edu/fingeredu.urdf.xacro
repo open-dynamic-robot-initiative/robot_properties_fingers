@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<robot name="fingeredu" xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+    <!--
+    Frames are defined such that they all align with the base frame when all
+    joints are at position zero.
+
+    In zero-configuration the origins of all joints are in one line.
+
+    In zero-configuration the origin of the base link is exactly above the
+    finger tip which should make it easy to place the finger in the world.
+    -->
+
+    <xacro:include filename="fingeredu_macro.xacro" />
+
+    <material name="fingeredu_material">
+        <color rgba="0.6 0.6 0.6 1.0" />
+    </material>
+
+    <xacro:property name="distance_to_ground" value="${0.363 - 0.08}" />
+
+    <!--
+    Simply calling the "finger" macro (without passing any suffix) implies a
+    call for single finger.  The parameters are automatically set inside the
+    fingeredu_macro file, to accommodate for single finger.
+    -->
+    <xacro:fingeredu material="fingeredu_material" />
+
+    <!--
+    Define the global base link and place the finger relative to it.
+    -->
+
+    <link name="base_link">
+      <xacro:add_inertia
+          length_x="0.005"
+          length_y="0.005"
+          length_z="0.005"
+          mass="1"
+          com="0 0 0"/>
+    </link>
+    <joint name="base_to_finger" type="fixed">
+        <parent link="base_link"/>
+        <child link="fingeredu_base_link"/>
+        <origin xyz="0 0 ${distance_to_ground}"/>
+    </joint>
+
+</robot>
+

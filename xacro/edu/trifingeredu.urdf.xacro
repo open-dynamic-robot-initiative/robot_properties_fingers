@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<robot name="trifingeredu"
+    xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+
+    <xacro:include filename="fingeredu_macro.xacro" />
+    <xacro:include filename="../macros.xacro" />
+
+    <xacro:property name="distance_to_ground" value="${0.363 - 0.08}" />
+    <xacro:property name="distance_to_center" value="-${offset_x_base_to_front + 0.02}" />
+    <xacro:property name="angle_0" value="${radians(0)}"/>
+    <xacro:property name="angle_120" value="${radians(120)}"/>
+    <xacro:property name="angle_240" value="${radians(240)}"/>
+
+    <!-- Define the global base_link and place all other objects relative to it. -->
+    <link name="base_link">
+      <xacro:add_inertia
+          length_x="0.005"
+          length_y="0.005"
+          length_z="0.005"
+          mass="1"
+          com="0 0 0"/>
+    </link>
+
+    <!-- Define the upper holder -->
+    <link name="trifingeredu_base_link" />
+    <joint name="base_to_trifingeredu_base_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="trifingeredu_base_link"/>
+        <origin xyz="0 0 ${distance_to_ground}"/>
+    </joint>
+
+    <material name="fingeredu_0_material">
+        <color rgba="0.6 0.0 0.0 1.0" />
+    </material>
+    <material name="fingeredu_120_material">
+        <color rgba="0.0 0.6 0.0 1.0" />
+    </material>
+    <material name="fingeredu_240_material">
+        <color rgba="0.0 0.0 0.6 1.0" />
+    </material>
+
+    <!-- Define the three fingers and place them relative to the upper holder -->
+    <xacro:fingeredu suffix="_0" material="fingeredu_0_material" />
+    <xacro:fingeredu suffix="_120" material="fingeredu_120_material" />
+    <xacro:fingeredu suffix="_240" material="fingeredu_240_material" />
+
+    <joint name="base_to_fingeredu_0" type="fixed">
+        <parent link="trifingeredu_base_link"/>
+        <child link="fingeredu_base_link_0"/>
+        <origin xyz="${distance_to_center * cos(-angle_0)} ${distance_to_center * sin(-angle_0)} 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="base_to_fingeredu_120" type="fixed">
+        <parent link="trifingeredu_base_link"/>
+        <child link="fingeredu_base_link_120"/>
+        <origin xyz="${distance_to_center * cos(-angle_120)} ${distance_to_center * sin(-angle_120)} 0" rpy="0 0 -${angle_120}"/>
+    </joint>
+
+    <joint name="base_to_fingeredu_240" type="fixed">
+        <parent link="trifingeredu_base_link"/>
+        <child link="fingeredu_base_link_240"/>
+        <origin xyz="${distance_to_center * cos(-angle_240)} ${distance_to_center * sin(-angle_240)} 0" rpy="0 0 -${angle_240}"/>
+    </joint>
+
+</robot>
+

@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot name="finger_with_stage"
+<robot name="trifinger_with_stage"
     xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
 
     <xacro:include filename="trifinger.urdf.xacro" />
