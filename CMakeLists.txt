@@ -7,9 +7,14 @@ find_package(catkin REQUIRED COMPONENTS
   xacro
 )
 
-# Xacro files of the quadruped
-file(GLOB  xacro_file_names RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/xacro
-     ${CMAKE_CURRENT_SOURCE_DIR}/xacro/*.xacro)
+catkin_package()
+
+
+# Xacro files
+file(GLOB_RECURSE xacro_file_names
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/xacro
+    ${CMAKE_CURRENT_SOURCE_DIR}/xacro/*.urdf.xacro
+)
 
 foreach(xacro_file_name ${xacro_file_names})
   # remove .xacro extension
@@ -27,17 +32,11 @@ foreach(xacro_file_name ${xacro_file_names})
 
   list(APPEND urdf_files ${urdf_file_full_path})
 
-  message( ${CMAKE_CURRENT_SOURCE_DIR} )
-  message( ${xacro_file_full_path} )
-  message( ${urdf_file_full_path} )
+  message("${CMAKE_CURRENT_SOURCE_DIR}:")
+  message("\txacro/${xacro_file_name} --> urdf/${urdf_file_name}")
 
 endforeach(xacro_file_name)
 
 # add an abstract target to actually trigger the builds
 add_custom_target(${PROJECT_NAME}_urdf_build_files ALL DEPENDS ${urdf_files})
-
-catkin_package()
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-
 
