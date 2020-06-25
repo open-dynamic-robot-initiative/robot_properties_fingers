@@ -26,7 +26,7 @@
     <joint name="base_to_trifinger_base_joint" type="fixed">
         <parent link="base_link"/>
         <child link="trifinger_base_link"/>
-        <origin xyz="0 0 ${distance_to_ground}"/>
+        <origin xyz="0 0 ${distance_to_ground}" rpy="0 0 ${radians(-90)}" />
     </joint>
 
     <material name="fingeredu_0_material">
