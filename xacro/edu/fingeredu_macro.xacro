@@ -29,7 +29,7 @@
         <!--
         Fixed links for the finger base (parts where the upper link is mounted).
         -->
-        <link name="fingeredu_base_link${suffix}">
+        <link name="finger_base_link${suffix}">
             <xacro:add_geometry
                 rpy="0 0 0"
                 xyz="-0.17995 0 0"
@@ -75,7 +75,7 @@
 
         <!-- FIXME inertias are not correct! -->
 
-        <link name="fingeredu_upper_link${suffix}">
+        <link name="finger_upper_link${suffix}">
             <xacro:add_geometry
                 rpy="0 0 0"
                 xyz="${offset_x_base_to_upper_link_front} 0 0"
@@ -95,7 +95,7 @@
 
         </link>
 
-        <link name="fingeredu_middle_link${suffix}">
+        <link name="finger_middle_link${suffix}">
             <xacro:add_geometry
                 rpy="0 0 0"
                 xyz="0 0 0"
@@ -112,7 +112,7 @@
 
         </link>
 
-        <link name="fingeredu_lower_link${suffix}">
+        <link name="finger_lower_link${suffix}">
             <xacro:add_geometry
                 rpy="0 0 0"
                 xyz="0 0 0"
@@ -133,7 +133,7 @@
         </link>
 
         <!-- fixed link for finger tip -->
-        <link name="fingeredu_tip_link${suffix}">
+        <link name="finger_tip_link${suffix}">
             <!-- TODO: Inertia of tip is just a very rough estimate -->
             <xacro:add_inertia
                 length_x="0.01"
@@ -142,34 +142,34 @@
                 com="0 0 0"
                 mass="0.01"/>
         </link>
-        <joint name="fingeredu_lower_to_tip_joint${suffix}" type="fixed">
-            <parent link="fingeredu_lower_link${suffix}"/>
-            <child link="fingeredu_tip_link${suffix}"/>
+        <joint name="finger_lower_to_tip_joint${suffix}" type="fixed">
+            <parent link="finger_lower_link${suffix}"/>
+            <child link="finger_tip_link${suffix}"/>
             <origin xyz="0 -0.008 -0.16"/>
         </joint>
 
 
         <!-- kinematics -->
 
-        <joint name="fingeredu_base_to_upper_joint${suffix}" type="revolute">
-            <parent link="fingeredu_base_link${suffix}"/>
-            <child link="fingeredu_upper_link${suffix}"/>
+        <joint name="finger_base_to_upper_joint${suffix}" type="revolute">
+            <parent link="finger_base_link${suffix}"/>
+            <child link="finger_upper_link${suffix}"/>
             <limit effort="1000" lower="-${pi/2}" upper="${pi/2}" velocity="1000"/>
             <axis xyz="-1 0 0"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </joint>
 
-        <joint name="fingeredu_upper_to_middle_joint${suffix}" type="revolute">
-            <parent link="fingeredu_upper_link${suffix}"/>
-            <child link="fingeredu_middle_link${suffix}"/>
+        <joint name="finger_upper_to_middle_joint${suffix}" type="revolute">
+            <parent link="finger_upper_link${suffix}"/>
+            <child link="finger_middle_link${suffix}"/>
             <limit effort="1000" lower="-${pi/2}" upper="${pi/2}" velocity="1000"/>
             <axis xyz="0 1 0"/>
             <origin rpy="0 0 0" xyz="0 -0.014 0"/>
         </joint>
 
-        <joint name="fingeredu_middle_to_lower_joint${suffix}" type="revolute">
-            <parent link="fingeredu_middle_link${suffix}"/>
-            <child link="fingeredu_lower_link${suffix}"/>
+        <joint name="finger_middle_to_lower_joint${suffix}" type="revolute">
+            <parent link="finger_middle_link${suffix}"/>
+            <child link="finger_lower_link${suffix}"/>
             <limit effort="1000" lower="-${pi}" upper="${pi}" velocity="1000"/>
             <axis xyz="0 1 0"/>
             <origin rpy="0 0 0" xyz="0 -0.03745 -0.16"/>

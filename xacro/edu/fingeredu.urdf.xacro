@@ -39,7 +39,7 @@
     </link>
     <joint name="base_to_finger" type="fixed">
         <parent link="base_link"/>
-        <child link="fingeredu_base_link"/>
+        <child link="finger_base_link"/>
         <origin xyz="0 0 ${distance_to_ground}"/>
     </joint>
 
