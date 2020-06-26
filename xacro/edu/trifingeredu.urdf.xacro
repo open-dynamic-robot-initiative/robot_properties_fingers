@@ -22,11 +22,11 @@
     </link>
 
     <!-- Define the upper holder -->
-    <link name="trifingeredu_base_link" />
-    <joint name="base_to_trifingeredu_base_joint" type="fixed">
+    <link name="trifinger_base_link" />
+    <joint name="base_to_trifinger_base_joint" type="fixed">
         <parent link="base_link"/>
-        <child link="trifingeredu_base_link"/>
-        <origin xyz="0 0 ${distance_to_ground}"/>
+        <child link="trifinger_base_link"/>
+        <origin xyz="0 0 ${distance_to_ground}" rpy="0 0 ${radians(-90)}" />
     </joint>
 
     <material name="fingeredu_0_material">
@@ -44,21 +44,21 @@
     <xacro:fingeredu suffix="_120" material="fingeredu_120_material" />
     <xacro:fingeredu suffix="_240" material="fingeredu_240_material" />
 
-    <joint name="base_to_fingeredu_0" type="fixed">
-        <parent link="trifingeredu_base_link"/>
-        <child link="fingeredu_base_link_0"/>
+    <joint name="base_to_finger_0" type="fixed">
+        <parent link="trifinger_base_link"/>
+        <child link="finger_base_link_0"/>
         <origin xyz="${distance_to_center * cos(-angle_0)} ${distance_to_center * sin(-angle_0)} 0" rpy="0 0 0"/>
     </joint>
 
-    <joint name="base_to_fingeredu_120" type="fixed">
-        <parent link="trifingeredu_base_link"/>
-        <child link="fingeredu_base_link_120"/>
+    <joint name="base_to_finger_120" type="fixed">
+        <parent link="trifinger_base_link"/>
+        <child link="finger_base_link_120"/>
         <origin xyz="${distance_to_center * cos(-angle_120)} ${distance_to_center * sin(-angle_120)} 0" rpy="0 0 -${angle_120}"/>
     </joint>
 
-    <joint name="base_to_fingeredu_240" type="fixed">
-        <parent link="trifingeredu_base_link"/>
-        <child link="fingeredu_base_link_240"/>
+    <joint name="base_to_finger_240" type="fixed">
+        <parent link="trifinger_base_link"/>
+        <child link="finger_base_link_240"/>
         <origin xyz="${distance_to_center * cos(-angle_240)} ${distance_to_center * sin(-angle_240)} 0" rpy="0 0 -${angle_240}"/>
     </joint>
 
