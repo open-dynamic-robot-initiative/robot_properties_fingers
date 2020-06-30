@@ -7,16 +7,25 @@
 
     <!-- Define the global base_link and place all other objects relative to it. -->
     <link name="base_link">
-      <xacro:add_inertia
-          length_x="0.005"
-          length_y="0.005"
-          length_z="0.005"
-          mass="1"
-          com="0 0 0"/>
+        <!-- add inertial to suppress warning -->
+        <xacro:add_inertia
+            length_x="0.005"
+            length_y="0.005"
+            length_z="0.005"
+            mass="1"
+            com="0 0 0"/>
     </link>
 
     <!-- Define the upper holder -->
-    <link name="upper_holder_link" />
+    <link name="upper_holder_link">
+        <!-- add inertial to suppress warning -->
+        <xacro:add_inertia
+            length_x="0.005"
+            length_y="0.005"
+            length_z="0.005"
+            mass="1"
+            com="0 0 0"/>
+    </link>
     <joint name="base_to_upper_holder_joint" type="fixed">
         <parent link="base_link"/>
         <child link="upper_holder_link"/>
