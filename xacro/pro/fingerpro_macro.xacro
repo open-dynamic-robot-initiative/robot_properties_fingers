@@ -122,12 +122,14 @@
 
 
         <!-- kinematics -->
-        <!-- FIXME: Set proper joint limits -->
+        <!-- NOTE: Joint limits are set according to soft limits in the
+             configuration of the real robot (i.e. not according to physical
+             limits). -->
 
         <joint name="finger_base_to_upper_joint${suffix}" type="revolute">
             <parent link="finger_base_link${suffix}"/>
             <child link="finger_upper_link${suffix}"/>
-            <limit effort="1000" lower="-${pi/2}" upper="${pi/2}" velocity="1000"/>
+            <limit effort="1000" lower="-0.9" upper="1.4" velocity="1000"/>
             <axis xyz="0 1 0"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </joint>
@@ -135,7 +137,7 @@
         <joint name="finger_upper_to_middle_joint${suffix}" type="revolute">
             <parent link="finger_upper_link${suffix}"/>
             <child link="finger_middle_link${suffix}"/>
-            <limit effort="1000" lower="${radians(-77.5)}" upper="${radians(257.5)}" velocity="1000"/>
+            <limit effort="1000" lower="-1.57" upper="1.57" velocity="1000"/>
             <axis xyz="1 0 0"/>
             <origin rpy="0 0 0" xyz="${middle_dx} ${middle_dy+center_offset} 0"/>
         </joint>
@@ -143,7 +145,7 @@
         <joint name="finger_middle_to_lower_joint${suffix}" type="revolute">
             <parent link="finger_middle_link${suffix}"/>
             <child link="finger_lower_link${suffix}"/>
-            <limit effort="1000" lower="${radians(-172)}" upper="${radians(172)}" velocity="1000"/>
+            <limit effort="1000" lower="-2.7" upper="2.7" velocity="1000"/>
             <axis xyz="1 0 0"/>
             <origin rpy="0 0 0" xyz="${lower_dx} 0 -${lower_dy}"/>
         </joint>
