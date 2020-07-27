@@ -18,13 +18,13 @@
 
     <!-- Define the upper holder -->
     <link name="upper_holder_link">
+        <xacro:add_visual_geometry
+            rpy="0 0 0"
+            xyz="0 0 0"
+            mesh_file="${center_link_mesh}"
+            material="finger_material"
+            mesh_scale="1." />
         <!-- add inertial to suppress warning -->
-        <xacro:add_geometry
-                        rpy="0 0 0"
-                        xyz="0 0 0"
-                        mesh_file="${center_link_mesh}"
-                        material="finger_material"
-                        mesh_scale="1." />
         <xacro:add_inertia
             length_x="0.005"
             length_y="0.005"
