@@ -32,6 +32,9 @@
     <xacro:property name="center_offset" value="0.0235" />
 
     <xacro:property name="mesh_x_offset" value="0.014" />
+    <xacro:property name="lower_joint_to_tip_distance" value="0.16" />
+    <xacro:property name="tip_mass" value="0.02" />
+
     <!--
     Defining the "finger" macro which is used for both single and tri-finger.
     The macro takes "suffix" as a parameter to differentiate between multiple fingers
@@ -102,12 +105,24 @@
                 com="0 0 -0.06"/>
         </link>
 
+        <!-- fixed link for finger tip -->
+        <link name="finger_tip_link${suffix}">
+            <xacro:add_inertia
+                length_x="0.01"
+                length_y="0.01"
+                length_z="0.01"
+                com="0 0 0"
+                mass="${tip_mass}"/>
+        </link>
+        <joint name="finger_lower_to_tip_joint${suffix}" type="fixed">
+            <parent link="finger_lower_link${suffix}"/>
+            <child link="finger_tip_link${suffix}"/>
+            <origin xyz="0.0185 0 -${lower_joint_to_tip_distance}"/>
+        </joint>
+
 
         <!-- kinematics -->
-        <!-- TODO: joint limits are based on values from wiki
-        (https://atlas.is.localnet/confluence/display/AMDW/Forward+Kinematics) but
-        should be verified on the real system (especially the finger tip limits look
-        a bit too big when visualizing the model. -->
+        <!-- FIXME: Set proper joint limits -->
 
         <joint name="finger_base_to_upper_joint${suffix}" type="revolute">
             <parent link="finger_base_link${suffix}"/>
