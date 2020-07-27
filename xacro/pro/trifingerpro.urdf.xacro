@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
-<robot name="new_trifinger"
+<robot name="trifingerpro"
     xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
 
-    <xacro:include filename="new_finger_macro.urdf.xacro" />
-    <xacro:include filename="macros.xacro" />
+    <xacro:include filename="fingerpro_macro.xacro" />
+    <xacro:include filename="../macros.xacro" />
 
     <!-- Define the global base_link and place all other objects relative to it. -->
     <link name="base_link">
@@ -49,9 +49,9 @@
     </material>
 
     <!-- Define the three fingers and place them relative to the upper holder -->
-    <xacro:new_finger suffix="_0" material="finger_0_material" />
-    <xacro:new_finger suffix="_120" material="finger_120_material" />
-    <xacro:new_finger suffix="_240" material="finger_240_material" />
+    <xacro:fingerpro suffix="_0" material="finger_0_material" />
+    <xacro:fingerpro suffix="_120" material="finger_120_material" />
+    <xacro:fingerpro suffix="_240" material="finger_240_material" />
 
     <!-- <xacro:property name="offset" value="0.04"/> upper_holder to finger offset -->
     <xacro:property name="angle_0" value="${radians(0)}"/>

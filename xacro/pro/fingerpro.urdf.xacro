@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot name="new_finger" xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+<robot name="fingerpro" xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
     <!--
     Frames are defined such that they all align with the base frame when all
     joints are at position zero.
@@ -10,7 +10,7 @@
     finger tip which should make it easy to place the finger in the world.
     -->
 
-    <xacro:include filename="new_finger_macro.urdf.xacro" />
+    <xacro:include filename="fingerpro_macro.xacro" />
 
     <material name="finger_material">
         <color rgba="0.6 0.6 0.6 1.0" />
@@ -20,7 +20,7 @@
     Simply calling the "finger" macro (without passing any suffix) implies a call for single finger.
     The parameters are automatically set inside the finger_macro file, to accomodate for single finger.
     -->
-    <xacro:new_finger material="finger_material" />
+    <xacro:fingerpro material="finger_material" />
 
     <!--
     Define the global base link and place the finger relative to it.
