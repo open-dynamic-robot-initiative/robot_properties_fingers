@@ -53,7 +53,6 @@
     <xacro:fingerpro suffix="_120" material="finger_120_material" />
     <xacro:fingerpro suffix="_240" material="finger_240_material" />
 
-    <!-- <xacro:property name="offset" value="0.04"/> upper_holder to finger offset -->
     <xacro:property name="angle_0" value="${radians(0)}"/>
     <xacro:property name="angle_120" value="${radians(120)}"/>
     <xacro:property name="angle_240" value="${radians(240)}"/>
@@ -61,22 +60,19 @@
     <joint name="holder_to_finger_0" type="fixed">
         <parent link="upper_holder_link"/>
         <child link="finger_base_link_0"/>
-        <!-- <origin xyz="${center_offset * sin(angle_0)} ${center_offset * cos(angle_0)} 0" rpy="0 0 0"/> -->
         <origin xyz="0 0 0" rpy="0 0 ${angle_0}"/>
     </joint>
 
     <joint name="holder_to_finger_120" type="fixed">
         <parent link="upper_holder_link"/>
         <child link="finger_base_link_120"/>
-        <!-- <origin xyz="${center_offset * sin(angle_120)} ${center_offset * cos(angle_120)} 0" rpy="0 0 -${angle_120}"/> -->
-        <origin xyz="0 0 0" rpy="0 0 ${angle_120}"/>
+        <origin xyz="0 0 0" rpy="0 0 -${angle_120}"/>
     </joint>
 
     <joint name="holder_to_finger_240" type="fixed">
         <parent link="upper_holder_link"/>
         <child link="finger_base_link_240"/>
-        <!-- <origin xyz="${center_offset * sin(angle_240)} ${center_offset * cos(angle_240)} 0" rpy="0 0 -${angle_240}"/> -->
-        <origin xyz="0 0 0" rpy="0 0 ${angle_240}"/>
+        <origin xyz="0 0 0" rpy="0 0 -${angle_240}"/>
     </joint>
 
 </robot>
