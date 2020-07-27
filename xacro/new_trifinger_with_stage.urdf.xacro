@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<robot name="new_trifinger_with_stage"
+    xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+
+    <xacro:include filename="new_trifinger.urdf.xacro" />
+    <xacro:include filename="trifinger_stage.urdf.xacro" />
+
+</robot>

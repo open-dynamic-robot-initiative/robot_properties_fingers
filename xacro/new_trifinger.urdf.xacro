@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<robot name="new_trifinger"
+    xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+
+    <xacro:include filename="new_finger_macro.urdf.xacro" />
+    <xacro:include filename="macros.xacro" />
+
+    <!-- Define the global base_link and place all other objects relative to it. -->
+    <link name="base_link">
+        <!-- add inertial to suppress warning -->
+        <xacro:add_inertia
+            length_x="0.005"
+            length_y="0.005"
+            length_z="0.005"
+            mass="1"
+            com="0 0 0"/>
+    </link>
+
+    <!-- Define the upper holder -->
+    <link name="upper_holder_link">
+        <!-- add inertial to suppress warning -->
+        <xacro:add_geometry
+                        rpy="0 0 0"
+                        xyz="0 0 0"
+                        mesh_file="${center_link_mesh}"
+                        material="finger_material"
+                        mesh_scale="1." />
+        <xacro:add_inertia
+            length_x="0.005"
+            length_y="0.005"
+            length_z="0.005"
+            mass="1"
+            com="0 0 0"/>
+    </link>
+    <joint name="base_to_upper_holder_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="upper_holder_link"/>
+        <origin xyz="0 0 0.34"/>
+    </joint>
+
+    <material name="finger_0_material">
+        <color rgba="0.6 0.0 0.0 1.0" />
+    </material>
+    <material name="finger_120_material">
+        <color rgba="0.0 0.6 0.0 1.0" />
+    </material>
+    <material name="finger_240_material">
+        <color rgba="0.0 0.0 0.6 1.0" />
+    </material>
+
+    <!-- Define the three fingers and place them relative to the upper holder -->
+    <xacro:new_finger suffix="_0" material="finger_0_material" />
+    <xacro:new_finger suffix="_120" material="finger_120_material" />
+    <xacro:new_finger suffix="_240" material="finger_240_material" />
+
+    <!-- <xacro:property name="offset" value="0.04"/> upper_holder to finger offset -->
+    <xacro:property name="angle_0" value="${radians(0)}"/>
+    <xacro:property name="angle_120" value="${radians(120)}"/>
+    <xacro:property name="angle_240" value="${radians(240)}"/>
+
+    <joint name="holder_to_finger_0" type="fixed">
+        <parent link="upper_holder_link"/>
+        <child link="finger_base_link_0"/>
+        <!-- <origin xyz="${center_offset * sin(angle_0)} ${center_offset * cos(angle_0)} 0" rpy="0 0 0"/> -->
+        <origin xyz="0 0 0" rpy="0 0 ${angle_0}"/>
+    </joint>
+
+    <joint name="holder_to_finger_120" type="fixed">
+        <parent link="upper_holder_link"/>
+        <child link="finger_base_link_120"/>
+        <!-- <origin xyz="${center_offset * sin(angle_120)} ${center_offset * cos(angle_120)} 0" rpy="0 0 -${angle_120}"/> -->
+        <origin xyz="0 0 0" rpy="0 0 ${angle_120}"/>
+    </joint>
+
+    <joint name="holder_to_finger_240" type="fixed">
+        <parent link="upper_holder_link"/>
+        <child link="finger_base_link_240"/>
+        <!-- <origin xyz="${center_offset * sin(angle_240)} ${center_offset * cos(angle_240)} 0" rpy="0 0 -${angle_240}"/> -->
+        <origin xyz="0 0 0" rpy="0 0 ${angle_240}"/>
+    </joint>
+
+</robot>
