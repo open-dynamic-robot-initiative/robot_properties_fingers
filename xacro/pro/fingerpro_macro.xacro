@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="https://ei.is.tuebingen.mpg.de/xacro">
+    <!--
+    Frames are defined such that they all align with the base frame when all
+    joints are at position zero.
+
+    In zero-configuration the origins of all joints are in one line.
+
+    In zero-configuration the origin of the base link is exactly above the
+    finger tip which should make it easy to place the finger in the world.
+    -->
+
+    <xacro:include filename="../macros.xacro" />
+
+    <!-- Meshes -->
+    <xacro:property name="mesh_file_extension" value="stl"/>
+    <xacro:property name="mesh_dir" value="package://robot_properties_fingers/meshes/${mesh_file_extension}/pro"/>
+
+    <xacro:property name="center_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Center.${mesh_file_extension}"/>
+    <xacro:property name="upper_base_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.${mesh_file_extension}"/>
+    <xacro:property name="upper_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.${mesh_file_extension}"/>
+    <xacro:property name="middle_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Intermediate.${mesh_file_extension}"/>
+    <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Tip.${mesh_file_extension}"/>
+
+    <!-- Distance from outer edge of the link to the joint center -->
+    <xacro:property name="upper_link_length" value="0.20945" />
+    <xacro:property name="middle_dx" value="0.01685" />
+    <xacro:property name="middle_dy" value="0.027" />
+    <xacro:property name="lower_dx" value="0.04922" />
+    <xacro:property name="lower_dy" value="0.16" />
+    <!-- center offset used to shift the finger by radius of the center piece yet to be added  -->
+    <xacro:property name="center_offset" value="0.0235" />
+
+    <xacro:property name="mesh_x_offset" value="0.014" />
+    <xacro:property name="lower_joint_to_tip_distance" value="0.16" />
+    <xacro:property name="tip_mass" value="0.02" />
+
+    <!--
+    Defining the "finger" macro which is used for both single and tri-finger.
+    The macro takes "suffix" as a parameter to differentiate between multiple fingers
+    In case of single finger, no "suffix" value is passed.
+    -->
+    <xacro:macro name="fingerpro" params="material suffix:=''">
+        <!--
+        Fixed links for the finger base (parts where the upper link is mounted).
+        Note: Link Frames already coincide with the joint location
+        -->
+        <link name="finger_base_link${suffix}">
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="0 ${upper_link_length+center_offset} 0"
+                mesh_file="${upper_base_mesh}"
+                material="${material}"
+                mesh_scale="1." />
+            <xacro:add_inertia
+                length_x="0.05"
+                length_y="0.05"
+                length_z="0.05"
+                mass="1"
+                com="0 0 0"/>
+        </link>
+
+        <link name="finger_upper_link${suffix}">
+            <xacro:add_geometry
+                rpy="0 0 0"
+                xyz="0 ${center_offset} 0"
+                mesh_file="${upper_link_mesh}"
+                material="${material}"
+                mesh_scale="1." />
+            <xacro:add_inertia
+                length_x="0.04"
+                length_y="0.14"
+                length_z="0.04"
+                mass="0.2"
+                com="0 0.06 0"/>
+        </link>
+
+        <link name="finger_middle_link${suffix}">
+            <xacro:add_geometry
+                rpy="${pi/2} 0 0"
+                xyz="0 0 0"
+                mesh_file="${middle_link_mesh}"
+                material="${material}"
+                mesh_scale="1." />
+            <xacro:add_inertia
+                length_x="0.04"
+                length_y="0.04"
+                length_z="0.14"
+                mass="0.2"
+                com="${2 * mesh_x_offset} 0 -0.08"/>
+        </link>
+
+        <link name="finger_lower_link${suffix}">
+            <xacro:add_geometry
+                rpy="${pi/2} 0 0"
+                xyz="0 0 0"
+                mesh_file="${lower_link_mesh}"
+                material="${material}"
+                mesh_scale="1."/>
+            <xacro:add_inertia
+                length_x="0.02"
+                length_y="0.02"
+                length_z="0.14"
+                mass="0.01"
+                com="0 0 -0.06"/>
+        </link>
+
+        <!-- fixed link for finger tip -->
+        <link name="finger_tip_link${suffix}">
+            <xacro:add_inertia
+                length_x="0.01"
+                length_y="0.01"
+                length_z="0.01"
+                com="0 0 0"
+                mass="${tip_mass}"/>
+        </link>
+        <joint name="finger_lower_to_tip_joint${suffix}" type="fixed">
+            <parent link="finger_lower_link${suffix}"/>
+            <child link="finger_tip_link${suffix}"/>
+            <origin xyz="0.0185 0 -${lower_joint_to_tip_distance}"/>
+        </joint>
+
+
+        <!-- kinematics -->
+        <!-- NOTE: Joint limits are set according to soft limits in the
+             configuration of the real robot (i.e. not according to physical
+             limits). -->
+
+        <joint name="finger_base_to_upper_joint${suffix}" type="revolute">
+            <parent link="finger_base_link${suffix}"/>
+            <child link="finger_upper_link${suffix}"/>
+            <limit effort="1000" lower="-0.9" upper="1.4" velocity="1000"/>
+            <axis xyz="0 1 0"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+        </joint>
+
+        <joint name="finger_upper_to_middle_joint${suffix}" type="revolute">
+            <parent link="finger_upper_link${suffix}"/>
+            <child link="finger_middle_link${suffix}"/>
+            <limit effort="1000" lower="-1.57" upper="1.57" velocity="1000"/>
+            <axis xyz="1 0 0"/>
+            <origin rpy="0 0 0" xyz="${middle_dx} ${middle_dy+center_offset} 0"/>
+        </joint>
+
+        <joint name="finger_middle_to_lower_joint${suffix}" type="revolute">
+            <parent link="finger_middle_link${suffix}"/>
+            <child link="finger_lower_link${suffix}"/>
+            <limit effort="1000" lower="-2.7" upper="2.7" velocity="1000"/>
+            <axis xyz="1 0 0"/>
+            <origin rpy="0 0 0" xyz="${lower_dx} 0 -${lower_dy}"/>
+        </joint>
+
+
+    </xacro:macro>
+</robot>

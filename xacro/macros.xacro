@@ -19,6 +19,17 @@
         </collision>
     </xacro:macro>
 
+    <xacro:macro name="add_visual_geometry"
+        params="rpy xyz mesh_file material mesh_scale:='1'">
+        <visual>
+            <origin rpy="${rpy}" xyz="${xyz}"/>
+            <geometry>
+                <mesh scale="${mesh_scale} ${mesh_scale} ${mesh_scale}" filename="${mesh_file}"/>
+            </geometry>
+            <material name="${material}" />
+        </visual>
+    </xacro:macro>
+
     <xacro:macro name="add_inertia" params="length_x length_y length_z mass com">
         <inertial>
             <origin rpy="0 0 0" xyz="${com}"/>
