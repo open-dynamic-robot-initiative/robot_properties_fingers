@@ -32,7 +32,7 @@
     <xacro:property name="center_offset" value="0.0235" />
 
     <xacro:property name="mesh_x_offset" value="0.014" />
-    <xacro:property name="lower_joint_to_tip_distance" value="0.16" />
+    <xacro:property name="lower_joint_to_tip_distance" value="0.1626" />
     <xacro:property name="tip_mass" value="0.02" />
 
     <!--

@@ -1,2 +1,3 @@
 *.pyc
 urdf/*
+.DS_Store
