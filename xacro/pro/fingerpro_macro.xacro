@@ -33,7 +33,6 @@
 
     <xacro:property name="mesh_x_offset" value="0.014" />
     <xacro:property name="lower_joint_to_tip_distance" value="0.1626" />
-    <xacro:property name="tip_mass" value="0.02" />
 
     <!--
     Defining the "finger" macro which is used for both single and tri-finger.
@@ -112,7 +111,7 @@
                 length_y="0.01"
                 length_z="0.01"
                 com="0 0 0"
-                mass="${tip_mass}"/>
+                mass="0"/>
         </link>
         <joint name="finger_lower_to_tip_joint${suffix}" type="fixed">
             <parent link="finger_lower_link${suffix}"/>
