@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 2.8.3)
-
 project(robot_properties_fingers)
 
 # find dependencies using catkin
@@ -16,6 +15,7 @@ file(GLOB_RECURSE xacro_file_names
     ${CMAKE_CURRENT_SOURCE_DIR}/xacro/*.urdf.xacro
 )
 
+# Build the xacro files and store the resulting URDFs in <package>/urdf
 foreach(xacro_file_name ${xacro_file_names})
   # remove .xacro extension
   string(REGEX MATCH "(.*)[.]xacro$" unused ${xacro_file_name})
