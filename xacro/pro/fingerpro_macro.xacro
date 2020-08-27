@@ -70,7 +70,7 @@
                 length_x="0.04"
                 length_y="0.14"
                 length_z="0.04"
-                mass="0.2"
+                mass="0.26"
                 com="0 0.06 0"/>
         </link>
 
@@ -85,7 +85,7 @@
                 length_x="0.04"
                 length_y="0.04"
                 length_z="0.14"
-                mass="0.2"
+                mass="0.25"
                 com="${2 * mesh_x_offset} 0 -0.08"/>
         </link>
 
@@ -100,7 +100,7 @@
                 length_x="0.02"
                 length_y="0.02"
                 length_z="0.14"
-                mass="0.01"
+                mass="0.021"
                 com="0 0 -0.06"/>
         </link>
 
@@ -111,7 +111,7 @@
                 length_y="0.01"
                 length_z="0.01"
                 com="0 0 0"
-                mass="0"/>
+                mass="0.031"/>
         </link>
         <joint name="finger_lower_to_tip_joint${suffix}" type="fixed">
             <parent link="finger_lower_link${suffix}"/>
