@@ -20,7 +20,8 @@
     <xacro:property name="upper_base_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.${mesh_file_extension}"/>
     <xacro:property name="upper_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.${mesh_file_extension}"/>
     <xacro:property name="middle_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Intermediate.${mesh_file_extension}"/>
-    <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Tip.${mesh_file_extension}"/>
+    <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Tip_without_tip.${mesh_file_extension}"/>
+    <xacro:property name="tip_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Tip_actual_tip.${mesh_file_extension}"/>
 
     <!-- Distance from outer edge of the link to the joint center -->
     <xacro:property name="upper_link_length" value="0.20945" />
@@ -106,6 +107,12 @@
 
         <!-- fixed link for finger tip -->
         <link name="finger_tip_link${suffix}">
+            <xacro:add_geometry
+                rpy="${pi/2} 0 0"
+                xyz="-0.0185 0 ${lower_joint_to_tip_distance}"
+                mesh_file="${tip_link_mesh}"
+                material="${material}"
+                mesh_scale="1."/>
             <xacro:add_inertia
                 length_x="0.01"
                 length_y="0.01"
