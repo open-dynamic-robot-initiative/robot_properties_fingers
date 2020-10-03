@@ -135,7 +135,7 @@
         <joint name="finger_base_to_upper_joint${suffix}" type="revolute">
             <parent link="finger_base_link${suffix}"/>
             <child link="finger_upper_link${suffix}"/>
-            <limit effort="1000" lower="-0.9" upper="1.4" velocity="1000"/>
+            <limit effort="1000" lower="-0.33" upper="1.0" velocity="1000"/>
             <axis xyz="0 1 0"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </joint>
@@ -143,7 +143,7 @@
         <joint name="finger_upper_to_middle_joint${suffix}" type="revolute">
             <parent link="finger_upper_link${suffix}"/>
             <child link="finger_middle_link${suffix}"/>
-            <limit effort="1000" lower="-1.57" upper="1.57" velocity="1000"/>
+            <limit effort="1000" lower="0.0" upper="1.57" velocity="1000"/>
             <axis xyz="1 0 0"/>
             <origin rpy="0 0 0" xyz="${middle_dx} ${middle_dy+center_offset} 0"/>
         </joint>
