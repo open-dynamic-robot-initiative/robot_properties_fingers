@@ -5,17 +5,8 @@
     <xacro:include filename="fingerpro_macro.xacro" />
     <xacro:include filename="../macros.xacro" />
 
-    <material name="finger_0_material">
-        <color rgba="0.6 0.0 0.0 1.0" />
-    </material>
-    <material name="finger_120_material">
-        <color rgba="0.0 0.6 0.0 1.0" />
-    </material>
-    <material name="finger_240_material">
-        <color rgba="0.0 0.0 0.6 1.0" />
-    </material>
-    <material name="real_finger_material">
-        <color rgba="0.83 0.79 0.82 1.0" />
+    <material name="center_holder_material">
+        <color rgba="0.1 0.1 0.1 1.0" />
     </material>
 
     <!-- Define the global base_link and place all other objects relative to it. -->
@@ -35,7 +26,7 @@
             rpy="0 0 0"
             xyz="0 0 0"
             mesh_file="${center_link_mesh}"
-            material="real_finger_material"
+            material="center_holder_material"
             mesh_scale="1." />
         <!-- add inertial to suppress warning -->
         <xacro:add_inertia
@@ -52,9 +43,9 @@
     </joint>
 
     <!-- Define the three fingers and place them relative to the upper holder -->
-    <xacro:fingerpro suffix="_0" material="real_finger_material" />
-    <xacro:fingerpro suffix="_120" material="real_finger_material" />
-    <xacro:fingerpro suffix="_240" material="real_finger_material" />
+    <xacro:fingerpro suffix="_0" />
+    <xacro:fingerpro suffix="_120" />
+    <xacro:fingerpro suffix="_240" />
 
     <xacro:property name="angle_0" value="${radians(0)}"/>
     <xacro:property name="angle_120" value="${radians(120)}"/>
