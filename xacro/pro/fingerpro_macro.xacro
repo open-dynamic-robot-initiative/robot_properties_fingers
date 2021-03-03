@@ -37,7 +37,13 @@
     <xacro:property name="lower_joint_to_tip_distance" value="0.1626" />
 
     <material name="fingerpro_shell">
-        <color rgba="0.83 0.79 0.82 1.0" />
+        <!-- colour from image -->
+        <color rgba="0.804 0.764 0.761 1.0" />
+    </material>
+
+    <material name="fingerpro_tip">
+        <!-- colour from image -->
+        <color rgba="0.33 0.36 0.37 1.0" />
     </material>
 
     <material name="fingerpro_motor">
@@ -207,7 +213,7 @@
                 rpy="${pi/2} 0 0"
                 xyz="-0.0185 0 ${lower_joint_to_tip_distance}"
                 mesh_file="${tip_link_mesh}"
-                material="fingerpro_shell"
+                material="fingerpro_tip"
                 mesh_scale="1."/>
             <xacro:add_inertia
                 length_x="0.01"
