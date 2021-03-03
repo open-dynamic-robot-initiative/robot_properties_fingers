@@ -12,15 +12,11 @@
 
     <xacro:include filename="fingerpro_macro.xacro" />
 
-    <material name="finger_material">
-        <color rgba="0.6 0.6 0.6 1.0" />
-    </material>
-
     <!--
     Simply calling the "finger" macro (without passing any suffix) implies a call for single finger.
     The parameters are automatically set inside the finger_macro file, to accomodate for single finger.
     -->
-    <xacro:fingerpro material="finger_material" />
+    <xacro:fingerpro />
 
     <!--
     Define the global base link and place the finger relative to it.
@@ -29,11 +25,11 @@
 
     <link name="center_link">
         <xacro:add_geometry
-                        rpy="0 0 0"
-                        xyz="0 0 0"
-                        mesh_file="${center_link_mesh}"
-                        material="finger_material"
-                        mesh_scale="1." />
+            rpy="0 0 0"
+            xyz="0 0 0"
+            mesh_file="${center_link_mesh}"
+            mesh_scale="1."
+            material="fingerpro_shell"/>
         <xacro:add_inertia
             length_x="0.005"
             length_y="0.005"
