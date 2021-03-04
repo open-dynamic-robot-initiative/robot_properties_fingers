@@ -89,7 +89,7 @@
                 mass="0.26"
                 com="0 0.06 0"/>
         </link>
-        <link name="finger_upper_link_motor${suffix}">
+        <link name="finger_upper_link_visuals${suffix}">
 
             <!-- motor -->
             <visual>
@@ -127,10 +127,15 @@
                 <material name="fingerpro_motor" />
             </visual>
 
+            <inertial>
+                <mass value="0"/>
+                <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+            </inertial>
+
         </link>
-        <joint name="finger_upper_to_motor_joint${suffix}" type="fixed">
+        <joint name="finger_upper_visuals_joint${suffix}" type="fixed">
             <parent link="finger_upper_link${suffix}"/>
-            <child link="finger_upper_link_motor${suffix}"/>
+            <child link="finger_upper_link_visuals${suffix}"/>
             <origin xyz="0 ${center_offset} 0" />
         </joint>
 
@@ -148,7 +153,7 @@
                 mass="0.25"
                 com="${2 * mesh_x_offset} 0 -0.08"/>
         </link>
-        <link name="finger_middle_link_motor${suffix}">
+        <link name="finger_middle_link_visuals${suffix}">
 
             <!-- motor -->
             <visual>
@@ -186,10 +191,15 @@
                 <material name="fingerpro_motor" />
             </visual>
 
+            <inertial>
+                <mass value="0"/>
+                <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+            </inertial>
+
         </link>
-        <joint name="finger_middle_to_motor_joint${suffix}" type="fixed">
+        <joint name="finger_middle_visuals_joint${suffix}" type="fixed">
             <parent link="finger_middle_link${suffix}"/>
-            <child link="finger_middle_link_motor${suffix}"/>
+            <child link="finger_middle_link_visuals${suffix}"/>
         </joint>
 
         <link name="finger_lower_link${suffix}">
