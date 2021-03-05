@@ -13,15 +13,14 @@
     <xacro:include filename="../macros.xacro" />
 
     <!-- Meshes -->
-    <xacro:property name="mesh_file_extension" value="stl"/>
-    <xacro:property name="mesh_dir" value="package://robot_properties_fingers/meshes/${mesh_file_extension}/pro"/>
+    <xacro:property name="mesh_dir" value="package://robot_properties_fingers/meshes/pro"/>
 
-    <xacro:property name="center_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Center.${mesh_file_extension}"/>
-    <xacro:property name="upper_base_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.${mesh_file_extension}"/>
-    <xacro:property name="upper_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.${mesh_file_extension}"/>
-    <xacro:property name="middle_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Intermediate.${mesh_file_extension}"/>
-    <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Tip_without_tip.${mesh_file_extension}"/>
-    <xacro:property name="tip_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Tip_actual_tip.${mesh_file_extension}"/>
+    <xacro:property name="center_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Center.stl"/>
+    <xacro:property name="upper_base_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.stl"/>
+    <xacro:property name="upper_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.stl"/>
+    <xacro:property name="middle_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Intermediate.stl"/>
+    <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Tip_without_tip.stl"/>
+    <xacro:property name="tip_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Tip_actual_tip.stl"/>
     <xacro:property name="motor_mesh" value="${mesh_dir}/SIM__BL-Finger_Motor.stl"/>
 
     <!-- Distance from outer edge of the link to the joint center -->

@@ -10,7 +10,7 @@
     <xacro:include filename="../macros.xacro" />
 
     <xacro:property name="mesh_dir"
-        value="package://robot_properties_fingers/meshes/stl/edu"/>
+        value="package://robot_properties_fingers/meshes/edu"/>
 
     <xacro:property name="base_front_width" value="0.006" />
     <xacro:property name="offset_x_base_to_upper_link_front" value="0.0195" />

@@ -13,18 +13,17 @@
     <xacro:include filename="macros.xacro" />
 
     <!-- Meshes -->
-    <xacro:property name="mesh_file_extension" value="stl"/>
-    <xacro:property name="mesh_dir" value="package://robot_properties_fingers/meshes/${mesh_file_extension}"/>
+    <xacro:property name="mesh_dir" value="package://robot_properties_fingers/meshes"/>
 
-    <xacro:property name="upper_base_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.${mesh_file_extension}"/>
-    <xacro:property name="base_holder_mesh" value="${mesh_dir}/BL_Finger_Holder_SIM.${mesh_file_extension}"/>
-    <xacro:property name="upper_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.${mesh_file_extension}"/>
-    <xacro:property name="middle_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Intermediate.${mesh_file_extension}"/>
-    <!-- <xacro:property name="lower_link_mesh" value="${mesh_dir}/Tip_link_Modular_SIM.${mesh_file_extension}"/> -->
+    <xacro:property name="upper_base_mesh" value="${mesh_dir}/SIM__BL-Finger_Base.stl"/>
+    <xacro:property name="base_holder_mesh" value="${mesh_dir}/BL_Finger_Holder_SIM.stl"/>
+    <xacro:property name="upper_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Proximal.stl"/>
+    <xacro:property name="middle_link_mesh" value="${mesh_dir}/SIM__BL-Finger_Intermediate.stl"/>
+    <!-- <xacro:property name="lower_link_mesh" value="${mesh_dir}/Tip_link_Modular_SIM.stl"/> -->
     <!-- With the round tip the lower link is closer to the one of the single finger.
          TODO: set a proper mesh matching the actual link of the TriFinger. -->
-    <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_file_extension}"/>
-    <xacro:property name="tip_padding_mesh" value="${mesh_dir}/finger_padding.${mesh_file_extension}"/>
+    <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.stl"/>
+    <xacro:property name="tip_padding_mesh" value="${mesh_dir}/finger_padding.stl"/>
 
     <!-- Distance from outer edge of the link to the joint center -->
     <xacro:property name="upper_joint_center_offset" value="0.02695" />
@@ -51,7 +50,7 @@
 
         <!-- In case of single finger (i.e. when no suffix is passed), we change the default values of the following variables. -->
         <xacro:if value="${suffix == ''}">
-            <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.${mesh_file_extension}"/> <!-- lower_link_mesh for single finger -->
+            <xacro:property name="lower_link_mesh" value="${mesh_dir}/SIM_BL_FINGER_TIP_LINK.stl"/> <!-- lower_link_mesh for single finger -->
             <xacro:property name="lower_link_mesh_scale" value="1" /> <!-- not changing the scale here. Therefore, keeping the value to 1 (original scale) -->
             <xacro:property name="tip_padding" value="1" />
             <xacro:property name="base_holder" value="1" />
