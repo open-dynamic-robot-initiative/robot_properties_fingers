@@ -24,16 +24,11 @@
     <xacro:property name="motor_mesh" value="${mesh_dir}/motor_sim.stl"/>
 
     <!-- Distance from outer edge of the link to the joint center -->
-    <xacro:property name="upper_link_length" value="0.20945" />
     <xacro:property name="middle_dx" value="0.01685" />
-    <xacro:property name="middle_dy" value="0.027" />
-    <xacro:property name="lower_dx" value="0.04922" />
+    <xacro:property name="middle_dy" value="0.05050" />
+    <xacro:property name="lower_dx" value="0.05015" />
     <xacro:property name="lower_dy" value="0.16" />
-    <!-- center offset used to shift the finger by radius of the center piece yet to be added  -->
-    <xacro:property name="center_offset" value="0.0235" />
-
-    <xacro:property name="mesh_x_offset" value="0.014" />
-    <xacro:property name="lower_joint_to_tip_distance" value="0.1626" />
+    <xacro:property name="lower_joint_to_tip_distance" value="0.160" />
 
     <material name="fingerpro_shell">
         <!-- colour from image -->
@@ -93,7 +88,7 @@
 
             <!-- motor -->
             <visual>
-                <origin xyz="0.018 0.141 -0.001" />
+                <origin xyz="0.01569 0.1643 0" />
                 <geometry>
                     <mesh filename="${motor_mesh}"/>
                 </geometry>
@@ -102,7 +97,7 @@
 
             <!-- end stop -->
             <visual>
-                <origin xyz="0.015 0.06 0" rpy="0 ${pi/2} 0" />
+                <origin xyz="0.015 0.083 0" rpy="0 ${pi/2} 0" />
                 <geometry>
                     <cylinder length="0.015" radius="0.005"/>
                 </geometry>
@@ -111,7 +106,7 @@
 
             <!-- cables -->
             <visual>
-                <origin xyz="-0.008 0.1 0" rpy="${pi/2} 0 0" />
+                <origin xyz="-0.008 0.124 0" rpy="${pi/2} 0 0" />
                 <geometry>
                     <cylinder length="0.12" radius="0.002"/>
                 </geometry>
@@ -120,7 +115,7 @@
 
             <!-- opening on lower joint -->
             <visual>
-                <origin xyz="-0.008 0.026 0" rpy="0 ${pi/2} 0" />
+                <origin xyz="-0.0085 0.050 0" rpy="0 ${pi/2} 0" />
                 <geometry>
                     <cylinder length="0.002" radius="0.014"/>
                 </geometry>
@@ -136,7 +131,7 @@
         <joint name="finger_upper_visuals_joint${suffix}" type="fixed">
             <parent link="finger_upper_link${suffix}"/>
             <child link="finger_upper_link_visuals${suffix}"/>
-            <origin xyz="0 ${center_offset} 0" />
+            <origin xyz="0 0 0" />
         </joint>
 
         <link name="finger_middle_link${suffix}">
@@ -157,7 +152,7 @@
 
             <!-- motor -->
             <visual>
-                <origin xyz="0.048 0 -0.046" />
+                <origin xyz="0.0488 0 -0.0462" />
                 <geometry>
                     <mesh filename="${motor_mesh}"/>
                 </geometry>
@@ -166,7 +161,7 @@
 
             <!-- end stop -->
             <visual>
-                <origin xyz="0.048 0 -0.13" rpy="0 ${pi/2} 0" />
+                <origin xyz="0.0488 0 -0.13" rpy="0 ${pi/2} 0" />
                 <geometry>
                     <cylinder length="0.015" radius="0.005"/>
                 </geometry>
@@ -235,7 +230,7 @@
         <joint name="finger_lower_to_tip_joint${suffix}" type="fixed">
             <parent link="finger_lower_link${suffix}"/>
             <child link="finger_tip_link${suffix}"/>
-            <origin xyz="0.0185 0 -${lower_joint_to_tip_distance}"/>
+            <origin xyz="0.019 0 -${lower_joint_to_tip_distance}"/>
         </joint>
 
 
@@ -257,7 +252,7 @@
             <child link="finger_middle_link${suffix}"/>
             <limit effort="1000" lower="0.0" upper="1.57" velocity="1000"/>
             <axis xyz="1 0 0"/>
-            <origin rpy="0 0 0" xyz="${middle_dx} ${middle_dy+center_offset} 0"/>
+            <origin rpy="0 0 0" xyz="${middle_dx} ${middle_dy} 0"/>
         </joint>
 
         <joint name="finger_middle_to_lower_joint${suffix}" type="revolute">
@@ -267,7 +262,6 @@
             <axis xyz="1 0 0"/>
             <origin rpy="0 0 0" xyz="${lower_dx} 0 -${lower_dy}"/>
         </joint>
-
 
     </xacro:macro>
 </robot>
