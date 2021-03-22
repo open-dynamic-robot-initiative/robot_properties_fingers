@@ -55,15 +55,6 @@
         Note: Link Frames already coincide with the joint location
         -->
         <link name="finger_base_link${suffix}">
-            <!--
-            <xacro:add_geometry
-                rpy="0 0 0"
-                xyz="0 ${upper_link_length+center_offset} 0"
-                mesh_file="${upper_base_mesh}"
-                material="fingerpro_shell"
-                mesh_scale="1." />
-            -->
-
             <inertial>
                 <mass value="0"/>
                 <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
@@ -77,12 +68,22 @@
                 mesh_file="${upper_link_mesh}"
                 material="fingerpro_shell"
                 mesh_scale="1." />
-            <xacro:add_inertia
-                length_x="0.04"
-                length_y="0.14"
-                length_z="0.04"
-                mass="0.26"
-                com="0 0.06 0"/>
+
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.006 0.122 0.000"/>
+                <mass value="0.26689"/>
+                <inertia
+                    ixx="0.00102362"
+                    ixy="0.00000889"
+                    ixz="-0.00000019"
+                    iyx="0.00000889"
+                    iyy="0.00006450"
+                    iyz="0.00000106"
+                    izx="-0.00000019"
+                    izy="0.00000106"
+                    izz="0.00102225"
+                    />
+            </inertial>
         </link>
         <link name="finger_upper_link_visuals${suffix}">
 
@@ -141,12 +142,23 @@
                 mesh_file="${middle_link_mesh}"
                 material="fingerpro_shell"
                 mesh_scale="1." />
-            <xacro:add_inertia
-                length_x="0.04"
-                length_y="0.04"
-                length_z="0.14"
-                mass="0.25"
-                com="${2 * mesh_x_offset} 0 -0.08"/>
+
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.03935008 -0.00012438 -0.08666705"/>
+                <mass value="0.27163"/>
+                <inertia
+                    ixx="0.00094060"
+                    ixy="-0.00000046"
+                    ixz="-0.00003479"
+                    iyx="-0.00000046"
+                    iyy="0.00094824"
+                    iyz="0.00000164"
+                    izx="-0.00003479"
+                    izy="0.00000164"
+                    izz="0.00007573"
+                    />
+            </inertial>
+
         </link>
         <link name="finger_middle_link_visuals${suffix}">
 
@@ -204,12 +216,23 @@
                 mesh_file="${lower_link_mesh}"
                 material="fingerpro_shell"
                 mesh_scale="1."/>
-            <xacro:add_inertia
-                length_x="0.02"
-                length_y="0.02"
-                length_z="0.14"
-                mass="0.021"
-                com="0 0 -0.06"/>
+
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.01632700 -0.00001095 -0.04284052"/>
+                <mass value="0.05569"/>
+                <inertia
+                    ixx="0.00013626"
+                    ixy="0.00000000"
+                    ixz="-0.00000662"
+                    iyx="0.00000000"
+                    iyy="0.00013372"
+                    iyz="0.00000004"
+                    izx="-0.00000662"
+                    izy="0.00000004"
+                    izz="0.00000667"
+                    />
+            </inertial>
+
         </link>
 
         <!-- fixed link for finger tip -->
@@ -226,6 +249,23 @@
                 length_z="0.01"
                 com="0 0 0"
                 mass="0.031"/>
+
+            <inertial>
+                <origin rpy="0 0 0" xyz="-0.00001194 0.00000000 0.01560060"/>
+                <mass value="0.0092"/>
+                <inertia
+                    ixx="0.00000155"
+                    ixy="0.00000000"
+                    ixz="0.00000000"
+                    iyx="0.00000000"
+                    iyy="0.00000155"
+                    iyz="0.00000000"
+                    izx="0.00000000"
+                    izy="0.00000000"
+                    izz="0.00000032"
+                    />
+            </inertial>
+
         </link>
         <joint name="finger_lower_to_tip_joint${suffix}" type="fixed">
             <parent link="finger_lower_link${suffix}"/>
