@@ -28,13 +28,13 @@
             mesh_file="${center_link_mesh}"
             material="center_holder_material"
             mesh_scale="1." />
+
         <!-- add inertial to suppress warning -->
-        <xacro:add_inertia
-            length_x="0.005"
-            length_y="0.005"
-            length_z="0.005"
-            mass="1"
-            com="0 0 0"/>
+        <inertial>
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+
     </link>
     <joint name="base_to_upper_holder_joint" type="fixed">
         <parent link="base_link"/>
