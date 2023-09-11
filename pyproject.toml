@@ -9,6 +9,7 @@ exclude = "doc/"
 module = [
     "ament_index_python.*",
     "pinocchio",
+    "pytest",
 ]
 ignore_missing_imports = true
 

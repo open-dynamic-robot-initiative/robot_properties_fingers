@@ -58,7 +58,7 @@ def test_forward_kinematics_velocity_nonzero(kinematics) -> None:
     )
     np.testing.assert_array_almost_equal(
         tip_velocities,
-        [[0, 0.5 * 0.16, 0], [0, 0, 0], [0.090718, -0.317128, -0.086]],
+        [[0.0, 0.5 * 0.16, 0.0], [0.0, 0.0, 0.0], [0.090718, -0.317128, -0.086]],
     )
 
 
