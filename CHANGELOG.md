@@ -4,6 +4,7 @@
 
 ### Added
 - Python package with function `get_urdf_base_path()`
+- Moved Pinocchio-based `Kinematics` class from trifinger_simulation to this package.
 
 ## [1.1.0] - 2022-06-28
 

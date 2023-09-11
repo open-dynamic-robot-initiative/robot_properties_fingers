@@ -47,4 +47,16 @@ install(DIRECTORY urdf
 install(DIRECTORY meshes
         DESTINATION share/${PROJECT_NAME})
 
+
+# Tests
+if (BUILD_TESTING)
+    find_package(ament_cmake_pytest REQUIRED)
+
+    # Python tests
+    ament_add_pytest_test(test_init_py tests/test_init.py)
+    ament_add_pytest_test(test_pinocchio_utils tests/test_pinocchio_utils.py)
+
+endif()
+
+
 ament_package()
