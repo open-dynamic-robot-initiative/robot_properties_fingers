@@ -1,7 +1,6 @@
 """Robot models and related utilities for the (Tri-)Finger robots."""
 
 import pathlib
-import typing as t
 
 from ament_index_python.packages import get_package_share_directory
 
