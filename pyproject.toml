@@ -1,0 +1,12 @@
+[tool.pylint.messages_control]
+disable = "C0330, C0326"
+
+[tool.mypy]
+exclude = "doc/"
+
+[[tool.mypy.overrides]]
+# list all modules for which no type hints are available
+module = [
+    "ament_index_python.*",
+]
+ignore_missing_imports = true
