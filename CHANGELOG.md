@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- Python package with function `get_urdf_base_path()`
+
 ## [1.1.0] - 2022-06-28
 
 There is no changelog for this or earlier versions.
