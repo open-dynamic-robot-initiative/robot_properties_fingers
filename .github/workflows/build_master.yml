@@ -11,11 +11,25 @@
 
 name: Build and Test
 
-on: pull_request
+on:
+  push:
+    branches:
+     - master
 
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.doc.outputs.page_url }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -25,6 +39,10 @@ jobs:
 
       - name: Build
         uses: open-dynamic-robot-initiative/trifinger-build-action/build@v2
+
+      - name: Documentation
+        id: doc
+        uses: open-dynamic-robot-initiative/trifinger-build-action/build_and_deploy_docs@v2
 
       - name: Tests
         uses: open-dynamic-robot-initiative/trifinger-build-action/run_tests@v2
