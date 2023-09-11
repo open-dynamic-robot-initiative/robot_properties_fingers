@@ -1,0 +1,48 @@
+name: Linters
+
+on: [pull_request]
+
+jobs:
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install
+        run: |
+          python3 -m pip install mypy types-PyYAML numpy==1.23.3
+      - name: Add matcher
+        run: |
+          echo "::add-matcher::.github/workflows/mypy-problem-matcher.json"
+      - name: Run mypy
+        run: |
+          python3 -m mypy .
+
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install
+        run: |
+          python3 -m pip install flake8
+      - name: Add matcher
+        run: |
+          echo "::add-matcher::.github/workflows/flake8-problem-matcher.json"
+      - name: Lint with flake8
+        run: |
+          python3 -m flake8 .
+
+  black:
+    name: Python Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: psf/black@stable
