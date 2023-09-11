@@ -39,7 +39,10 @@ class Kinematics:
         typing.List[np.ndarray],
         typing.Tuple[typing.List[np.ndarray], typing.List[np.ndarray]],
     ]:
-        """Compute end-effector positions (and velocities) for the given joint configuration.
+        """Compute end-effector positions and velocities.
+
+        Compute position and optionally velocity of the end-effector(s) given angular
+        joint positions/velocities.
 
         Args:
             joint_positions:  Flat list of angular joint positions.
@@ -125,7 +128,7 @@ class Kinematics:
             kept).  Second element is (x,y,z)-error of the tip position.
         """
         q = joint_angles_guess
-        for i in range(max_iterations):
+        for _ in range(max_iterations):
             q, err = self._inverse_kinematics_step(
                 self.tip_link_ids[finger_idx], tip_target_position, q
             )
