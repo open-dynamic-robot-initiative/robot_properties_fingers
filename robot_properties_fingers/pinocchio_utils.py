@@ -1,5 +1,8 @@
 """Wrappers around Pinocchio for easy forward and inverse kinematics."""
+from __future__ import annotations
+
 import typing
+import os
 
 import numpy as np
 import pinocchio
@@ -13,18 +16,19 @@ class Kinematics:
     """
 
     def __init__(
-        self, finger_urdf_path: str, tip_link_names: typing.Iterable[str]
-    ):
+        self,
+        finger_urdf_path: typing.Union[str, os.PathLike],
+        tip_link_names: typing.Iterable[str],
+    ) -> None:
         """
         Args:
             finger_urdf_path:  Path to the URDF file describing the robot.
             tip_link_names:  Names of the finger tip frames, one per finger.
         """
-        self.robot_model = pinocchio.buildModelFromUrdf(finger_urdf_path)
+        self.robot_model = pinocchio.buildModelFromUrdf(os.fspath(finger_urdf_path))
         self.data = self.robot_model.createData()
         self.tip_link_ids = [
-            self.robot_model.getFrameId(link_name)
-            for link_name in tip_link_names
+            self.robot_model.getFrameId(link_name) for link_name in tip_link_names
         ]
 
     def forward_kinematics(
@@ -51,9 +55,7 @@ class Kinematics:
             end-effector velocities. Each position and velocity is given
             as an np.array with x,y,z components.
         """
-        pinocchio.framesForwardKinematics(
-            self.robot_model, self.data, joint_positions
-        )
+        pinocchio.framesForwardKinematics(self.robot_model, self.data, joint_positions)
         positions = [
             np.asarray(self.data.oMf[link_id].translation).reshape(-1).tolist()
             for link_id in self.tip_link_ids
@@ -67,9 +69,7 @@ class Kinematics:
             velocities = []
             for link_id in self.tip_link_ids:
                 local_to_world_transform = pinocchio.SE3.Identity()
-                local_to_world_transform.rotation = self.data.oMf[
-                    link_id
-                ].rotation
+                local_to_world_transform.rotation = self.data.oMf[link_id].rotation
                 v_local = pinocchio.getFrameVelocity(
                     self.robot_model, self.data, link_id
                 )

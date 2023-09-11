@@ -9,7 +9,7 @@ def kinematics() -> pf.Kinematics:
     urdf_file = pf.get_urdf_base_path("pro") / "trifingerpro.urdf"
 
     return pf.Kinematics(
-        str(urdf_file),  # FIXME accept Path
+        urdf_file,
         ["finger_tip_link_0", "finger_tip_link_120", "finger_tip_link_240"],
     )
 
