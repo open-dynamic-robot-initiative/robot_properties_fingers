@@ -1,5 +1,7 @@
 ``robot_properties_fingers`` contains the xacro model files for the various
-(Tri-)Finger robots as well as some Python utils to work with them.
+:doc:`(Tri-)Finger robots <trifinger_docs:index>` as well as some Python utils
+to work with them.
+
 
 The source code is hosted on GitHub_.  Please also use the `Bug Tracker`_ there
 if you have a question or want to report a bug.
@@ -12,6 +14,7 @@ Last rebuild of this documentation: |today|
    :caption: General Documentation
    :maxdepth: 1
 
+   doc/installation.rst
    doc/models.rst
 
 
