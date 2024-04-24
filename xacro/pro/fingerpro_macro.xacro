@@ -243,12 +243,6 @@
                 mesh_file="${tip_link_mesh}"
                 material="fingerpro_tip"
                 mesh_scale="1."/>
-            <xacro:add_inertia
-                length_x="0.01"
-                length_y="0.01"
-                length_z="0.01"
-                com="0 0 0"
-                mass="0.031"/>
 
             <inertial>
                 <origin rpy="0 0 0" xyz="-0.00001194 0.00000000 0.01560060"/>
