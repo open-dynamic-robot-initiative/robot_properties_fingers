@@ -1,4 +1,5 @@
 """Wrappers around Pinocchio for easy forward and inverse kinematics."""
+
 from __future__ import annotations
 
 import typing
