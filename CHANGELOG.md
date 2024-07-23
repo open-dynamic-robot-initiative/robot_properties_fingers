@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Changed
+- Converted to pure Python package.  You can still use the package in a colcon workspace
+  as before, but it is now also possible to install it with pip.
+- **BREAKING:** Model files are not installed to `share/` anymore.  Instead they are
+  installed as package data inside the Python package.  This allows to get the
+  path to the installed files in the same way with both a colcon-based and a pip-based
+  installation.
+
 ### Added
 - Python package with function `get_urdf_base_path()`
 - Moved Pinocchio-based `Kinematics` class from trifinger_simulation to this package.

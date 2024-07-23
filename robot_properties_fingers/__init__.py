@@ -2,8 +2,6 @@
 
 import pathlib
 
-from ament_index_python.packages import get_package_share_directory
-
 from .pinocchio_utils import Kinematics
 
 
@@ -28,9 +26,7 @@ def get_urdf_base_path(robot_type: str) -> pathlib.Path:
             f"Invalid robot type {robot_type}.  Valid types are {ROBOT_TYPES}."
         )
 
-    base_dir = (
-        pathlib.Path(get_package_share_directory("robot_properties_fingers")) / "urdf"
-    )
+    base_dir = pathlib.Path(__file__).parent / "urdf"
 
     if robot_type == "one":
         return base_dir

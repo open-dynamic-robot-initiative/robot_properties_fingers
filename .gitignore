@@ -1,3 +1,4 @@
 *.pyc
-urdf/*
+build/
+*.egg-info
 .DS_Store
