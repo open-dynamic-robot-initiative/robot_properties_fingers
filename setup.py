@@ -20,7 +20,7 @@ class CustomBuildCommand(build_py):
         build_py.run(self)
 
         # Define the paths
-        xacro_dir = pathlib.Path("xacro")
+        xacro_dir = pathlib.Path("xacro_files")
         urdf_dir = pathlib.Path(self.build_lib) / package_name / "urdf"
 
         # Process each xacro file
