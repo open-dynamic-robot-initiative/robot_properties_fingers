@@ -40,7 +40,8 @@ class CustomBuildCommand(build_py):
 setup(
     name=package_name,
     version="1.2.0",
-    packages=find_packages(exclude=["test"]),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     package_data={
         "robot_properties_fingers": ["meshes/*.stl", "meshes/**/*.stl"]
     },
