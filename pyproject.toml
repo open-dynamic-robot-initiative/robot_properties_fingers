@@ -59,3 +59,9 @@ convention = "google"
 "__init__.py" = ["F401"]  # unused imports
 "tests/*" = ["D", "ANN", "PLR2004"]
 "scripts/*" = ["D"]
+
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
