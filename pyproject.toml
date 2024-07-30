@@ -62,6 +62,11 @@ convention = "google"
 
 
 [tool.pytest.ini_options]
+# Explicitly specifying the test directory here is needed for `colcon test`, otherwise
+# it insists on importing robot_properties_fingers from the source directory for some
+# reason (which fails as URDF files only exist in the install space).
+# See https://robotics.stackexchange.com/q/112352/16508
+testpaths = "tests"
 addopts = [
     "--import-mode=importlib",
 ]
