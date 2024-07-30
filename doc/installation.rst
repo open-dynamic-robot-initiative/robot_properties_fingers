@@ -7,10 +7,8 @@ bundle.  See :ref:`trifinger_docs:install_software` in the TriFinger
 documentation.
 
 
-Alternatively, it can also be installed with standard Python tools, e.g.:
+Alternatively, it can also be installed as stand-alone Python package via pip:
 
 .. code-block:: bash
 
-   git clone https://github.com/open-dynamic-robot-initiative/robot_properties_fingers.git
-   cd robot_properties_fingers
-   pip install .
+   pip install robot_properties_fingers
