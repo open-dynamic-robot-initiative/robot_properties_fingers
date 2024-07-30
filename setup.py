@@ -42,9 +42,7 @@ setup(
     version="1.2.0",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    package_data={
-        "robot_properties_fingers": ["meshes/*.stl", "meshes/**/*.stl"]
-    },
+    package_data={"robot_properties_fingers": ["meshes/*.stl", "meshes/**/*.stl"]},
     data_files=[
         (
             "share/ament_index/resource_index/packages",
@@ -60,6 +58,7 @@ setup(
         "xacro",
         "pin",  # pinocchio
     ],
+    extras_require={"test": ["pytest"]},
     zip_safe=True,
     maintainer="Felix Kloss",
     maintainer_email="felix.kloss@tue.mpg.de",
