@@ -37,9 +37,15 @@ class CustomBuildCommand(build_py):
             urdf_file.write_text(urdf_content)
 
 
+def load_readme() -> str:
+    """Load the README file."""
+    this_directory = pathlib.Path(__file__).parent
+    return (this_directory / "README.md").read_text()
+
+
 setup(
     name=package_name,
-    version="1.2.0",
+    version="2.0.1",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     package_data={"robot_properties_fingers": ["meshes/*.stl", "meshes/**/*.stl"]},
@@ -54,7 +60,6 @@ setup(
         ),
     ],
     install_requires=[
-        "setuptools",
         "xacro",
         "pin",  # pinocchio
     ],
@@ -62,11 +67,20 @@ setup(
     zip_safe=True,
     maintainer="Felix Kloss",
     maintainer_email="felix.kloss@tue.mpg.de",
-    description="Xacro files and meshes of the (Tri-)Finger robots.",
+    description="URDF files and meshes of the (Tri-)Finger robots.",
+    long_description=load_readme(),
+    long_description_content_type="text/markdown",
+    url="https://open-dynamic-robot-initiative.github.io/robot_properties_fingers/",
     license="BSD-3-Clause",
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [],
     },
     cmdclass={"build_py": CustomBuildCommand},
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        "License :: OSI Approved :: BSD License",
+        "Programming Language :: Python :: 3",
+        "Topic :: Scientific/Engineering",
+    ],
 )
