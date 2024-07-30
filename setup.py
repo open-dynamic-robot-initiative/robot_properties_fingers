@@ -37,6 +37,12 @@ class CustomBuildCommand(build_py):
             urdf_file.write_text(urdf_content)
 
 
+def load_readme() -> str:
+    """Load the README file."""
+    this_directory = pathlib.Path(__file__).parent
+    return (this_directory / "README.md").read_text()
+
+
 setup(
     name=package_name,
     version="2.0.0",
@@ -62,6 +68,9 @@ setup(
     maintainer="Felix Kloss",
     maintainer_email="felix.kloss@tue.mpg.de",
     description="URDF files and meshes of the (Tri-)Finger robots.",
+    long_description=load_readme(),
+    long_description_content_type="text/markdown",
+    url="https://open-dynamic-robot-initiative.github.io/robot_properties_fingers/",
     license="BSD-3-Clause",
     tests_require=["pytest"],
     entry_points={
