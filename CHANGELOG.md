@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.0.2] - 2024-07-30
+### Fixed
+- URDF files where only added when installed from source but not included in the wheel
+  that is pushed to PyPI.  This is fixed now.
+
 ## [2.0.1] - 2024-07-30
 ### Changed
 - Converted to pure Python package.  You can still use the package in a colcon workspace
@@ -24,6 +29,7 @@ There is no changelog for this or earlier versions.
 
 ---
 
-[Unreleased]: https://github.com/open-dynamic-robot-initiative/robot_properties_fingers/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/open-dynamic-robot-initiative/robot_properties_fingers/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/open-dynamic-robot-initiative/robot_properties_fingers/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/open-dynamic-robot-initiative/robot_properties_fingers/compare/v1.1.0...v2.0.1
 [1.1.0]: https://github.com/open-dynamic-robot-initiative/robot_properties_fingers/releases/tag/v1.1.0
