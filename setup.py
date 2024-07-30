@@ -61,7 +61,7 @@ setup(
     zip_safe=True,
     maintainer="Felix Kloss",
     maintainer_email="felix.kloss@tue.mpg.de",
-    description="Xacro files and meshes of the (Tri-)Finger robots.",
+    description="URDF files and meshes of the (Tri-)Finger robots.",
     license="BSD-3-Clause",
     tests_require=["pytest"],
     entry_points={

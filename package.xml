@@ -3,7 +3,7 @@
 <package format="3">
     <name>robot_properties_fingers</name>
     <version>2.0.0</version>
-    <description>Xacro files and meshes of the (Tri-)Finger robots.</description>
+    <description>URDF files and meshes of the (Tri-)Finger robots.</description>
     <maintainer email="felix.widmaier@tue.mpg.de">Felix Widmaier</maintainer>
     <license>BSD-3-Clause</license>
 
