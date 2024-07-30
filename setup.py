@@ -54,7 +54,6 @@ setup(
         ),
     ],
     install_requires=[
-        "setuptools",
         "xacro",
         "pin",  # pinocchio
     ],
