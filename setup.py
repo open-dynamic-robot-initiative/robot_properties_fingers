@@ -45,7 +45,7 @@ def load_readme() -> str:
 
 setup(
     name=package_name,
-    version="2.0.1",
+    version="2.0.2",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     package_data={"robot_properties_fingers": ["meshes/*.stl", "meshes/**/*.stl"]},
