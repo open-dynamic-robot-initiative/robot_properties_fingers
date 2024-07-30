@@ -6,6 +6,9 @@ from robot_properties_fingers import get_urdf_base_path
 def test_get_urdf_base_path() -> None:
     # verify paths by checking for existence of one of the expected URDF files
 
+    root = get_urdf_base_path("_root_")
+    assert (root / "pro").is_dir()
+
     one = get_urdf_base_path("one")
     assert (one / "finger.urdf").is_file()
 

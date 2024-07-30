@@ -1,3 +1,8 @@
+[build-system]
+requires = ["setuptools", "xacro"]
+build-backend = "setuptools.build_meta"
+
+
 [tool.pylint.messages_control]
 disable = "C0330, C0326"
 
@@ -7,9 +12,10 @@ exclude = "doc/"
 [[tool.mypy.overrides]]
 # list all modules for which no type hints are available
 module = [
-    "ament_index_python.*",
+    "xacro",
     "pinocchio",
     "pytest",
+    "setuptools.*",
 ]
 ignore_missing_imports = true
 
@@ -54,3 +60,14 @@ convention = "google"
 "__init__.py" = ["F401"]  # unused imports
 "tests/*" = ["D", "ANN", "PLR2004"]
 "scripts/*" = ["D"]
+
+
+[tool.pytest.ini_options]
+# Explicitly specifying the test directory here is needed for `colcon test`, otherwise
+# it insists on importing robot_properties_fingers from the source directory for some
+# reason (which fails as URDF files only exist in the install space).
+# See https://robotics.stackexchange.com/q/112352/16508
+testpaths = "tests"
+addopts = [
+    "--import-mode=importlib",
+]

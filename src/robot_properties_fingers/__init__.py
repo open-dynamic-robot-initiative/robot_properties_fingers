@@ -2,8 +2,6 @@
 
 import pathlib
 
-from ament_index_python.packages import get_package_share_directory
-
 from .pinocchio_utils import Kinematics
 
 
@@ -17,22 +15,22 @@ def get_urdf_base_path(robot_type: str) -> pathlib.Path:
          urdf_path = get_urdf_base_path("pro") / "trifingerpro.urdf"
 
     Args:
-        robot_type: Type of the robot.  One of {"pro", "edu", "one"}.
+        robot_type: Type of the robot.  One of {"pro", "edu", "one", "_root_"}.
+            "_root_" is a special type that returns the root directory containing all
+            the URDF files.
 
     Returns:
         Path to the directory containing the URDF files of the specified robot type.
     """
-    ROBOT_TYPES = ("pro", "edu", "one")
+    ROBOT_TYPES = ("pro", "edu", "one", "_root_")
     if robot_type not in ROBOT_TYPES:
         raise ValueError(
             f"Invalid robot type {robot_type}.  Valid types are {ROBOT_TYPES}."
         )
 
-    base_dir = (
-        pathlib.Path(get_package_share_directory("robot_properties_fingers")) / "urdf"
-    )
+    base_dir = pathlib.Path(__file__).parent / "urdf"
 
-    if robot_type == "one":
+    if robot_type in ("_root_", "one"):
         return base_dir
     return base_dir / robot_type
 

@@ -1,21 +1,20 @@
 <?xml version="1.0"?>
-<package format="2">
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
     <name>robot_properties_fingers</name>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <description>Xacro files and meshes of the (Tri-)Finger robots.</description>
     <maintainer email="felix.widmaier@tue.mpg.de">Felix Widmaier</maintainer>
-    <license>BSD 3-clause</license>
-
-    <buildtool_depend>ament_cmake</buildtool_depend>
+    <license>BSD-3-Clause</license>
 
     <!-- We need the xacro package to build the urdf model -->
     <build_depend>xacro</build_depend>
 
     <exec_depend>pinocchio</exec_depend>
 
-    <test_depend>ament_cmake_pytest</test_depend>
+    <test_depend>python3-pytest</test_depend>
 
     <export>
-        <build_type>ament_cmake</build_type>
+        <build_type>ament_python</build_type>
     </export>
 </package>
