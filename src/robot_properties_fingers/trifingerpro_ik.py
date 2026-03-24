@@ -1,5 +1,73 @@
 #!/usr/bin/env python3
-"""TriFingerPro Inverse Kinematics."""
+"""TriFingerPro Inverse Kinematics.
+
+Direct, analytic inverse kinematics solution for the TriFingerPro, see
+:func:`trifingerpro_ik`.
+
+Below is the description of the math used in the functions.
+
+
+Solution for finger0
+====================
+
+.. todo:: add drawing of finger with x/y/z axes
+
+Upper joint q0
+--------------
+
+.. image:: doc/images/trifingerpro_ik_drawing_q0.png
+
+The upper joint is rotating around the y-axis, so for finding its angle, it is enough to
+look at the xz-plane.  In zero-configuration, the tip is offset from the base in
+x-direction by TIP_X_OFFSET.  So for finding the angular joint position ``q0``, we draw
+a circle with radius TIP_X_OFFSET around the base center (which is the point of
+rotation) and find the tangent to that circle that goes through the finger tip.  The
+angle between this tangent and the z-axis directly gives the joint angle ``q0``.
+
+Note that there are two tangents, so we have to determine which one is the right one.
+This is done by checking the angle between the tip-to-base and tip-to-tangent-point
+vectors.  For the correct tangent, this angle has to be negative.
+
+The other two joints only affect the position of the finger tip on the tangent line, so
+``q0`` is independent of them.
+
+
+Middle joint q1
+---------------
+
+.. image:: doc/images/trifingerpro_ik_drawing_q1_and_q2.png
+
+To compute q1, we project the tip position, middle joint and lower joint onto the
+yz-plane rotated by q0 (basically flattening the robot along the x-axis in
+zero-configuration).  This plane is referred to as "tangent plane" in the code, because
+plane is orthogonal to the xz-plane and parallel with the tangent computed above.
+
+On this plane, we can compute the distance between the finger tip and the middle joint
+(joint 1).  Together with the known lengths of the middle and lower link, we get a
+triangle where the lengths of all three sides is known.  We can easily compute the
+angles ``alpha + q1`` and ``beta`` of it.
+
+Now we only need to find ``alpha`` to know ``q1``.  We get it by rotating the
+tip-to-joint1 vector from the tangent plane by ``-q0`` to align with the xz-plane and
+then compute the angle between z-axis and the rotated tip-to-joint1 vector.
+
+
+Lower joint q2
+--------------
+
+Using the triangle from above, we can easily compute ``beta``.  Then ``q2 = beta -
+180°``.
+
+
+Solution for finger120 and finger240
+====================================
+
+Since the other fingers are simply rotated around the center by 120° and 240° with
+respect to finger0, we can rotate the desired tip positions for these fingers in the
+opposite direction and then simply use the same function as for finger0 to compute the
+joint angles.
+
+"""
 
 import numpy as np
 
@@ -11,7 +79,24 @@ LOWER_LINK_LENGTH = 0.16
 JOINT1_Y_OFFSET = 0.0505
 
 
-def get_tangent_points(px, py, cx, cy, radius):
+def _get_tangent_points(
+    px: float, py: float, cx: float, cy: float, radius: float
+) -> tuple[np.ndarray, np.ndarray] | None:
+    """Compute tangents of a circle that go through a given point P outside the circle.
+
+    There are two solutions, so the function is returning two tangent points.
+
+    Args:
+        px: x-coordinate of the point P.
+        py: y-coordinate of the point P.
+        cx: x-coordinate of the circle center
+        cy: y-coordinate of the circle center
+        radius: radius of the circle
+
+    Returns:
+        The tangent points on the circle of the two tangents.  Returns None if P lies
+        inside the circle.
+    """
     # based on https://stackoverflow.com/a/69641745/2095383
     dx = cx - px
     dy = cy - py
@@ -55,15 +140,20 @@ def get_tangent_points(px, py, cx, cy, radius):
 
 
 def fingerpro_ik(tip_position: np.ndarray) -> np.ndarray:
-    """Compute inverse kinematics for FingerPro."""
-    # TODO: check if this actually works for the single finger model or if the origin is
-    # different there!
+    """Compute inverse kinematics for a single FingerPro.
+
+    Args:
+        tip_position: The desired tip position in world coordinates.
+
+    Returns:
+        Joint angles for the finger to reach the given tip position.
+    """
     tip_position = np.asarray(tip_position)
 
-    # JOINT 0 ==================================
+    # JOINT 0 (upper joint) ==================================
     tip_xz = tip_position[[0, 2]]
 
-    tangent_points = get_tangent_points(
+    tangent_points = _get_tangent_points(
         tip_xz[0], tip_xz[1], 0, BASE_HEIGHT, TIP_X_OFFSET
     )
     if tangent_points is None:
@@ -89,7 +179,7 @@ def fingerpro_ik(tip_position: np.ndarray) -> np.ndarray:
     tangent_vector /= np.linalg.norm(tangent_vector)
     joint0_angle = np.pi / 2 - np.arctan2(tangent_vector[1], tangent_vector[0])
 
-    # JOINT 1 ==================================
+    # JOINT 1 (middle joint) ==================================
 
     rot_y = np.array(
         [
@@ -115,7 +205,7 @@ def fingerpro_ik(tip_position: np.ndarray) -> np.ndarray:
     tip_to_joint1 = joint1_on_tip_plane - tip_position
     tip_to_joint1_distance = np.linalg.norm(tip_to_joint1)
 
-    # alternative: rotate tip-to_joint_on_plane to align with z-azis
+    # rotate tip-to_joint_on_plane to align with z-azis
     tip_to_joint1_foo = rot_y_inv @ tip_to_joint1
     # normalize for angle calculation
     tip_to_joint1_foo /= np.linalg.norm(tip_to_joint1_foo)
@@ -127,7 +217,7 @@ def fingerpro_ik(tip_position: np.ndarray) -> np.ndarray:
     )
     joint1_angle = alpha_and_q1 - alpha
 
-    # JOINT 1 ==================================
+    # JOINT 2 (lower joint) ==================================
 
     beta = np.arccos(
         (MIDDLE_LINK_LENGTH**2 + LOWER_LINK_LENGTH**2 - tip_to_joint1_distance**2)
@@ -139,7 +229,14 @@ def fingerpro_ik(tip_position: np.ndarray) -> np.ndarray:
 
 
 def trifingerpro_ik(tip_positions: np.ndarray) -> np.ndarray:
-    """Compute inverse kinematics for all three fingers of the FingerPro."""
+    """Compute inverse kinematics for the TriFingerPro.
+
+    Args:
+        tip_positions: The desired tip positions in world coordinates.
+
+    Returns:
+        Joint angles for the fingers to reach the given tip position.
+    """
     angle_120 = 2 * np.pi / 3
     angle_240 = 2 * angle_120
     rotmat_z_120 = np.array(
