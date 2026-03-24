@@ -24,8 +24,6 @@ ignore_missing_imports = true
 target-version = "py312"
 
 # for a complete list of available rules see https://docs.astral.sh/ruff/rules/
-# TODO commented-out rules below should be enabled but currently result in quite
-# a lot of warnings, which need to be fixed first.
 lint.select = [
     "F", # pyflakes
     "E", # pycodestyle
@@ -33,7 +31,7 @@ lint.select = [
     "B", # bugbear
     "I", # isort
     "N", # naming
-    # "UP", # pyupgrade
+    "UP", # pyupgrade
     "A", # builtins
     "FA", # future-annotations
     "G", # logging-format
