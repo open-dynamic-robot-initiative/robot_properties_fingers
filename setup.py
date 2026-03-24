@@ -3,10 +3,9 @@
 import pathlib
 from os import path
 
+import xacro
 from setuptools import find_packages, setup
 from setuptools.command.build_py import build_py
-
-import xacro
 
 package_name = "robot_properties_fingers"
 

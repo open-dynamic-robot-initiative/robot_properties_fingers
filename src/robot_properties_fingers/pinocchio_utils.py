@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import typing
 import os
+import typing
 
 import numpy as np
 import pinocchio

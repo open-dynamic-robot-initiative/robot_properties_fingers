@@ -31,7 +31,7 @@ lint.select = [
     "E", # pycodestyle
     "W", # pycodestyle
     "B", # bugbear
-    # "I", # isort
+    "I", # isort
     "N", # naming
     # "UP", # pyupgrade
     "A", # builtins
