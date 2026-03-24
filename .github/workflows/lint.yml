@@ -9,10 +9,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
       - name: Install
         run: |
-          python3 -m pip install mypy types-PyYAML numpy==1.23.3
+          python3 -m pip install mypy types-PyYAML numpy==1.26.4
       - name: Add matcher
         run: |
           echo "::add-matcher::.github/workflows/mypy-problem-matcher.json"
@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.12"
       - name: Install ruff
         run: |
           python -m pip install --upgrade pip
@@ -42,5 +42,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
       - uses: psf/black@stable

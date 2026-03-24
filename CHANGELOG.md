@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Changed
+- Bump tested Python version to 3.12.
 
 ## [2.0.2] - 2024-07-30
 ### Fixed

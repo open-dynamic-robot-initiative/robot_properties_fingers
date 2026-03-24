@@ -1,10 +1,10 @@
-import pytest
 import numpy as np
+import pytest
 
 import robot_properties_fingers as pf
 
 
-@pytest.fixture()
+@pytest.fixture
 def kinematics() -> pf.Kinematics:
     urdf_file = pf.get_urdf_base_path("pro") / "trifingerpro.urdf"
 

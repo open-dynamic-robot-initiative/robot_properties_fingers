@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import typing
 import os
+import typing
 
 import numpy as np
 import pinocchio
@@ -18,7 +18,7 @@ class Kinematics:
 
     def __init__(
         self,
-        finger_urdf_path: typing.Union[str, os.PathLike],
+        finger_urdf_path: str | os.PathLike,
         tip_link_names: typing.Iterable[str],
     ) -> None:
         """
@@ -34,12 +34,9 @@ class Kinematics:
 
     def forward_kinematics(
         self,
-        joint_positions: typing.List[np.ndarray],
-        joint_velocities: typing.Optional[np.ndarray] = None,
-    ) -> typing.Union[
-        typing.List[np.ndarray],
-        typing.Tuple[typing.List[np.ndarray], typing.List[np.ndarray]],
-    ]:
+        joint_positions: list[np.ndarray],
+        joint_velocities: np.ndarray | None = None,
+    ) -> list[np.ndarray] | tuple[list[np.ndarray], list[np.ndarray]]:
         """Compute end-effector positions and velocities.
 
         Compute position and optionally velocity of the end-effector(s) given angular
@@ -83,7 +80,7 @@ class Kinematics:
 
     def _inverse_kinematics_step(
         self, frame_id: int, xdes: np.ndarray, q0: np.ndarray
-    ) -> typing.Tuple[np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray]:
         """Compute one IK iteration for a single finger."""
         dt = 1.0e-1
         pinocchio.computeJointJacobians(self.robot_model, self.data, q0)
@@ -111,7 +108,7 @@ class Kinematics:
         joint_angles_guess: np.ndarray,
         tolerance: float = 0.005,
         max_iterations: int = 1000,
-    ) -> typing.Tuple[np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray]:
         """Inverse kinematics for a single finger.
 
         Args:
@@ -144,7 +141,7 @@ class Kinematics:
         joint_angles_guess: np.ndarray,
         tolerance: float = 0.005,
         max_iterations: int = 1000,
-    ) -> typing.Tuple[np.ndarray, typing.List[np.ndarray]]:
+    ) -> tuple[np.ndarray, list[np.ndarray]]:
         """Inverse kinematics for the whole manipulator.
 
         Args:
