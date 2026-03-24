@@ -10,7 +10,14 @@ Below is the description of the math used in the functions.
 Solution for finger0
 ====================
 
-.. todo:: add drawing of finger with x/y/z axes
+See :doc:`doc/world_frame_and_joint_axes` for the joint order, rotation axes and
+zero-configuration of the robot.
+
+The world coordinate frame has its origin in the center at the ground.  The first
+finger ("finger0") is aligned with the y-axis, the other two are rotated by 120° and
+240° around the z-axes:
+
+.. image:: doc/images/trifingerpro_global_frame.png
 
 Upper joint q0
 --------------

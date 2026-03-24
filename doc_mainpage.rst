@@ -18,6 +18,8 @@ Last rebuild of this documentation: |today|
 
    doc/installation.rst
    doc/models.rst
+   doc/world_frame_and_joint_axes.rst
+   doc/kinematics.rst
 
 
 .. _GitHub: https://github.com/open-dynamic-robot-initiative/robot_properties_fingers
