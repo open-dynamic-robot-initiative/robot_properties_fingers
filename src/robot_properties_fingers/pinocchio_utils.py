@@ -14,6 +14,9 @@ class Kinematics:
 
     Provides forward and inverse kinematics functions for a Finger robot with
     arbitrarily many independent fingers.
+
+    See :doc:`robot_fingers:doc/examples/demo_trifingerpro_kinematics` for an usage
+    example.
     """
 
     def __init__(

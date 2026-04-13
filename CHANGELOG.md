@@ -4,6 +4,10 @@
 ### Changed
 - Bump tested Python version to 3.12.
 
+### Added
+- Direct solution for TriFingerPro inverse kinematics (see module `trifingerpro_ik`).
+
+
 ## [2.0.2] - 2024-07-30
 ### Fixed
 - URDF files where only added when installed from source but not included in the wheel
